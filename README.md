@@ -3,8 +3,18 @@ LeoLab crm
 - Chạy sync để tạo/cập nhật bảng database: `node sync.js`
 
 # API Payroll
-- fields: id_employee, amount, stablecoin_type, payday, status
-- relationships: employee (User), approver (User)
+## Field Validation
+- **id_employee**: Required, Integer (FK to User)
+- **amount**: Required, Float
+- **stablecoin_type**: Optional, String (default: 'USDT')
+- **payday**: Required, Date (YYYY-MM-DD format)
+- **status**: Optional, String (default: 'pending')
+
+## Status Values
+- `pending`: Chờ duyệt
+- `approved`: Đã duyệt
+- `paid`: Đã thanh toán
+- `rejected`: Bị từ chối
 
 ## 1. GET ALL PAYROLLS
 **URL:** `GET /api/payrolls`
@@ -263,15 +273,4 @@ Content-Type: application/json
 }
 ```
 
-## Field Validation
-- **id_employee**: Required, Integer (FK to User)
-- **amount**: Required, Float
-- **stablecoin_type**: Optional, String (default: 'USDT')
-- **payday**: Required, Date (YYYY-MM-DD format)
-- **status**: Optional, String (default: 'pending')
 
-## Status Values
-- `pending`: Chờ duyệt
-- `approved`: Đã duyệt
-- `paid`: Đã thanh toán
-- `rejected`: Bị từ chối
