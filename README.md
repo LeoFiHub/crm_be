@@ -5,11 +5,12 @@
 # API User
 ## Field Validation
 - **fullName**: Required, String
-- **email**: Optional, String (email format)
+- **email**: Required, String (email format, unique)
+- **password**: Required, String (will be hashed automatically)
 - **phoneNumber**: Optional, String
 - **walletAddress**: Optional, String
 - **salary**: Optional, Float (only for employee role)
-- **status**: Optional, String
+- **status**: Optional, String (default: 'active')
 - **role**: Required, Enum ('employee', 'accounting', 'hr') 
 
 ## 1. GET ALL USERS
@@ -80,6 +81,7 @@ Content-Type: application/json
 {
   "fullName": "Nguyễn Văn B",
   "email": "nguyenvanb@email.com",
+  "password": "password123",
   "phoneNumber": "0987654321",
   "walletAddress": "0x456...",
   "salary": 12000000,
@@ -118,6 +120,7 @@ Content-Type: application/json
 {
   "fullName": "Nguyễn Văn A Updated",
   "email": "nguyenvana.updated@email.com",
+  "password": "newpassword123",
   "phoneNumber": "0111222333",
   "salary": 20000000,
   "status": "active",
@@ -172,7 +175,15 @@ Content-Type: application/json
 ```json
 {
   "success": false,
-  "message": "fullName và role là bắt buộc"
+  "message": "fullName, email, password và role là bắt buộc"
+}
+```
+
+**400 Email Already Exists:**
+```json
+{
+  "success": false,
+  "message": "Email đã được sử dụng"
 }
 ```
 
@@ -183,5 +194,7 @@ Content-Type: application/json
   "message": "Lỗi khi tạo user: [error details]"
 }
 ```
+
+**Note:** Password sẽ được hash tự động và không bao giờ trả về trong response để đảm bảo bảo mật.
 
 
