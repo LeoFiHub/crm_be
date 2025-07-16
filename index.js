@@ -21,7 +21,7 @@ const app = express();
 const PORT = process.env.PORT || 3000;
 
 //================Cau hinh CORS================
-// Cho phép truy cập từ frontend (React, Vue, Angular, v.v.)
+// Cho phép truy cập từ frontend React, Vue, Angular, v.v.
 app.use(cors({
   origin: 'http://localhost:3000', // hoặc mảng origin
   credentials: true
@@ -86,7 +86,7 @@ app.get('/', (req, res) => {
         register: 'POST /api/auth/register',
         login: 'POST /api/auth/login',
         profile: 'GET /api/auth/profile (Protected)'
-
+      },
 
       payrolls: {
         get_all: 'GET /api/payrolls',
@@ -96,7 +96,7 @@ app.get('/', (req, res) => {
         create: 'POST /api/payrolls',
         update: 'PUT /api/payrolls/:id',
         delete: 'DELETE /api/payrolls/:id'
-
+      },
       users: {
         get_all: 'GET /api/users',
         get_by_id: 'GET /api/users/:id',
