@@ -1,12 +1,23 @@
 require('dotenv').config();
 const express = require('express');
+const cors = require('cors');
 const { testConnection } = require('./config/db.config');
+
+
 
 // Import routes
 const authRoutes = require('./routes/auth.route');
 
 const app = express();
 const PORT = process.env.PORT || 3000;
+
+//================Cau hinh CORS================
+// Cho phép truy cập từ frontend (React, Vue, Angular, v.v.)
+app.use(cors({
+  origin: 'http://localhost:3000', // hoặc mảng origin
+  credentials: true
+}));
+
 
 // Middleware
 app.use(express.json());
