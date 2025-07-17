@@ -23,7 +23,7 @@ const PORT = process.env.PORT || 3000;
 //================Cau hinh CORS================
 // Cho phép truy cập từ frontend React, Vue, Angular, v.v.
 app.use(cors({
-  origin: 'http://localhost:3000', // hoặc mảng origin
+  origin: 'http://localhost:5173', // hoặc mảng origin
   credentials: true
 }));
 

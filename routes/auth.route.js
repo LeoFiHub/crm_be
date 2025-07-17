@@ -1,5 +1,6 @@
 const express = require('express');
 const router = express.Router();
+
 const {
   register,
   login,
@@ -16,5 +17,6 @@ router.post('/login', login);
 
 // GET /api/auth/profile 
 router.get('/profile', authMiddleware, getProfile);
+
 
 module.exports = router;
