@@ -22,6 +22,9 @@ async function seed() {
                 salary: 1800,
                 status: 'active',
                 role: 'employee',
+                dateOfBirth: '1990-03-15',
+                gender: 'male',
+                address: '123 Main St, New York, NY, USA',
             },
             {
                 fullName: 'Sarah Johnson',
@@ -32,6 +35,9 @@ async function seed() {
                 salary: 2100,
                 status: 'active',
                 role: 'employee',
+                dateOfBirth: '1992-07-22',
+                gender: 'female',
+                address: '456 Oak Ave, Los Angeles, CA, USA',
             },
             {
                 fullName: 'Michael Brown',
@@ -42,6 +48,9 @@ async function seed() {
                 salary: 1700,
                 status: 'inactive',
                 role: 'employee',
+                dateOfBirth: '1988-11-05',
+                gender: 'male',
+                address: '789 Pine Rd, Chicago, IL, USA',
             },
             {
                 fullName: 'Emily Davis',
@@ -52,6 +61,9 @@ async function seed() {
                 salary: 1950,
                 status: 'active',
                 role: 'employee',
+                dateOfBirth: '1995-02-10',
+                gender: 'female',
+                address: '321 Maple St, Houston, TX, USA',
             },
             {
                 fullName: 'David Wilson',
@@ -62,6 +74,9 @@ async function seed() {
                 salary: 2200,
                 status: 'active',
                 role: 'employee',
+                dateOfBirth: '1991-09-30',
+                gender: 'male',
+                address: '654 Cedar Ave, Seattle, WA, USA',
             },
 
             // Accounting
@@ -74,6 +89,9 @@ async function seed() {
                 salary: 3200,
                 status: 'active',
                 role: 'accounting',
+                dateOfBirth: '1985-06-18',
+                gender: 'female',
+                address: '987 Spruce Blvd, Boston, MA, USA',
             },
             {
                 fullName: 'Robert Taylor',
@@ -84,6 +102,9 @@ async function seed() {
                 salary: 3050,
                 status: 'active',
                 role: 'accounting',
+                dateOfBirth: '1987-12-03',
+                gender: 'male',
+                address: '246 Birch Ln, Denver, CO, USA',
             },
 
             // HR
@@ -96,6 +117,9 @@ async function seed() {
                 salary: 3500,
                 status: 'active',
                 role: 'hr',
+                dateOfBirth: '1983-04-25',
+                gender: 'female',
+                address: '135 Willow Dr, Miami, FL, USA',
             },
             {
                 fullName: 'Thomas Garcia',
@@ -106,6 +130,9 @@ async function seed() {
                 salary: 3300,
                 status: 'active',
                 role: 'hr',
+                dateOfBirth: '1989-08-14',
+                gender: 'other',
+                address: '753 Aspen Ct, San Francisco, CA, USA',
             },
         ];
 

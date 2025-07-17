@@ -1,6 +1,6 @@
-const sequelize = require('./config/sequelize.config');
-const User = require('./models/user.model');
-const PayrollSchedule = require('./models/payroll.model');
+const sequelize = require('../config/sequelize.config');
+const User = require('../models/user.model');
+const PayrollSchedule = require('../models/payroll.model');
 
 async function syncModels() {
   try {
