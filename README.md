@@ -59,7 +59,6 @@ JWT_EXPIRES_IN=
   payday: Date (Required),
   status: String (Default: 'pending'),
   approved_by: Integer (FK to User, Optional)
-}
 ```
 
 # 🔐 API Authentication
@@ -84,7 +83,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": true,
-  "message": "Đăng ký thành công",
+  "message": "Registration successful",
   "data": {
     "user": {
       "id": 1,
@@ -113,7 +112,16 @@ JWT_EXPIRES_IN=
 }
 ```
 
-**Response:** Same as register
+**Response:**
+```json
+{
+  "success": true,
+  "message": "Login successful",
+  "data": {
+    /* same structure as register response */
+  }
+}
+```
 
 ## 3. XEM HỒ SƠ (Protected)
 **URL:** `GET /api/auth/profile`
@@ -123,7 +131,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": true,
-  "message": "Lấy thông tin hồ sơ thành công",
+  "message": "Profile retrieved successfully",
   "data": {
     "id": 1,
     "fullName": "Nguyễn Văn A",
@@ -145,7 +153,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": true,
-  "message": "Lấy danh sách users thành công",
+  "message": "Get users list successfully",
   "data": [
     {
       "id": 1,
@@ -201,7 +209,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": true,
-  "message": "Lấy danh sách payrolls thành công",
+  "message": "Get payrolls list successfully",
   "data": [
     {
       "id": 1,
@@ -268,7 +276,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": false,
-  "message": "Token không hợp lệ. Vui lòng đăng nhập"
+  "message": "Invalid token. Please login."
 }
 ```
 
@@ -276,7 +284,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": false,
-  "message": "Bạn không có quyền truy cập. Cần role: hr"
+  "message": "Access denied. Required role: hr"
 }
 ```
 
@@ -284,7 +292,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": false,
-  "message": "fullName, email, password và role là bắt buộc"
+  "message": "fullName, email, password and role are required"
 }
 ```
 
@@ -292,7 +300,7 @@ JWT_EXPIRES_IN=
 ```json
 {
   "success": false,
-  "message": "Không tìm thấy user"
+  "message": "User not found"
 }
 ```
 

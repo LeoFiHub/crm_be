@@ -9,14 +9,14 @@ const getAllUsers = async (req, res) => {
     });
     res.status(200).json({
       success: true,
-      message: 'Lấy danh sách users thành công',
+      message: 'Get users list successfully',
       data: users,
       count: users.length
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi lấy danh sách users: ' + error.message
+      message: 'Error getting users list: ' + error.message
     });
   }
 };
@@ -32,19 +32,19 @@ const getUserById = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy user'
+        message: 'User not found'
       });
     }
     
     res.status(200).json({
       success: true,
-      message: 'Lấy thông tin user thành công',
+      message: 'Get user successfully',
       data: user
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi lấy thông tin user: ' + error.message
+      message: 'Error getting user: ' + error.message
     });
   }
 };
@@ -58,7 +58,7 @@ const createUser = async (req, res) => {
     if (!fullName || !role || !email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'fullName, email, password và role là bắt buộc'
+        message: 'fullName, email, password and role are required'
       });
     }
 
@@ -67,7 +67,7 @@ const createUser = async (req, res) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: 'Email đã được sử dụng'
+        message: 'Email already exists'
       });
     }
 
@@ -92,13 +92,13 @@ const createUser = async (req, res) => {
     
     res.status(201).json({
       success: true,
-      message: 'Tạo user thành công',
+      message: 'User created successfully',
       data: userResponse
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi tạo user: ' + error.message
+      message: 'Error creating user: ' + error.message
     });
   }
 };
@@ -114,7 +114,7 @@ const updateUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy user'
+        message: 'User not found'
       });
     }
 
@@ -130,7 +130,7 @@ const updateUser = async (req, res) => {
       if (existingUser) {
         return res.status(400).json({
           success: false,
-          message: 'Email đã được sử dụng'
+          message: 'Email already exists'
         });
       }
     }
@@ -143,13 +143,13 @@ const updateUser = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      message: 'Cập nhật user thành công',
+      message: 'User updated successfully',
       data: userResponse
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi cập nhật user: ' + error.message
+      message: 'Error updating user: ' + error.message
     });
   }
 };
@@ -164,7 +164,7 @@ const deleteUser = async (req, res) => {
     if (!user) {
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy user'
+        message: 'User not found'
       });
     }
     
@@ -172,12 +172,12 @@ const deleteUser = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      message: 'Xóa user thành công'
+      message: 'User deleted successfully'
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi xóa user: ' + error.message
+      message: 'Error deleting user: ' + error.message
     });
   }
 };

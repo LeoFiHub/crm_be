@@ -7,20 +7,22 @@ const {
   updateUser,
   deleteUser
 } = require('../controllers/user.controller');
+const authMiddleware = require('../middleware/auth.middleware');
+const { requireAccounting } = require('../middleware/role.middleware');
 
 // GET /api/users - Lấy tất cả users
-router.get('/', getAllUsers);
+router.get('/', authMiddleware, requireAccounting, getAllUsers);
 
 // GET /api/users/:id - Lấy user theo ID
-router.get('/:id', getUserById);
+router.get('/:id', authMiddleware, requireAccounting, getUserById);
 
 // POST /api/users - Tạo user mới
-router.post('/', createUser);
+router.post('/', authMiddleware, requireAccounting, createUser);
 
 // PUT /api/users/:id - Cập nhật user
-router.put('/:id', updateUser);
+router.put('/:id', authMiddleware, requireAccounting, updateUser);
 
 // DELETE /api/users/:id - Xóa user
-router.delete('/:id', deleteUser);
+router.delete('/:id', authMiddleware, requireAccounting, deleteUser);
 
 module.exports = router;

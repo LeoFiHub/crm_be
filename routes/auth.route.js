@@ -14,7 +14,7 @@ router.post('/register', register);
 // POST /api/auth/login - Đăng nhập
 router.post('/login', login);
 
-// GET /api/auth/profile - Xem hồ sơ (Protected route) - phân quyền
-router.get('/profile', authMiddleware,requireHR, getProfile);
+// GET /api/auth/profile 
+router.get('/profile', authMiddleware, getProfile);
 
 module.exports = router;

@@ -29,6 +29,9 @@ const User = sequelize.define('User', {
     type: DataTypes.ENUM('employee', 'accounting', 'hr'),
     allowNull: false,
   },
+  dateOfBirth: { type: DataTypes.DATEONLY },
+  gender: { type: DataTypes.ENUM('male', 'female', 'other') },
+  address: { type: DataTypes.STRING }
 });
 
 module.exports = User;

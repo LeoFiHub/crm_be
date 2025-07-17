@@ -20,7 +20,7 @@ const register = async (req, res) => {
     if (!fullName || !email || !password || !role) {
       return res.status(400).json({
         success: false,
-        message: 'fullName, email, password và role là bắt buộc'
+        message: 'fullName, email, password and role are required'
       });
     }
 
@@ -29,7 +29,7 @@ const register = async (req, res) => {
     if (!emailRegex.test(email)) {
       return res.status(400).json({
         success: false,
-        message: 'Email không hợp lệ'
+        message: 'Invalid email'
       });
     }
 
@@ -37,16 +37,16 @@ const register = async (req, res) => {
     if (password.length < 6) {
       return res.status(400).json({
         success: false,
-        message: 'Password phải có ít nhất 6 ký tự'
+        message: 'Password must be at least 6 characters'
       });
     }
 
-    // Kiểm tra email đã tồn tại chưa
+    // Check if email already exists
     const existingUser = await User.findOne({ where: { email } });
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: 'Email đã được sử dụng'
+        message: 'Email already exists'
       });
     }
 
@@ -75,7 +75,7 @@ const register = async (req, res) => {
 
     res.status(201).json({
       success: true,
-      message: 'Đăng ký thành công',
+      message: 'Registration successful',
       data: {
         user: userResponse,
         token,
@@ -87,7 +87,7 @@ const register = async (req, res) => {
     console.error('Register error:', error);
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi đăng ký: ' + error.message
+      message: 'Error registering: ' + error.message
     });
   }
 };
@@ -101,16 +101,16 @@ const login = async (req, res) => {
     if (!email || !password) {
       return res.status(400).json({
         success: false,
-        message: 'Email và password là bắt buộc'
+        message: 'Email and password are required'
       });
     }
 
-    // Tìm user theo email
+    // Find user by email
     const user = await User.findOne({ where: { email } });
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'Email hoặc password không đúng'
+        message: 'Invalid email or password'
       });
     }
 
@@ -119,7 +119,7 @@ const login = async (req, res) => {
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: 'Email hoặc password không đúng'
+        message: 'Invalid email or password'
       });
     }
 
@@ -127,7 +127,7 @@ const login = async (req, res) => {
     if (user.status !== 'active') {
       return res.status(401).json({
         success: false,
-        message: 'Tài khoản đã bị vô hiệu hóa'
+        message: 'Account has been disabled'
       });
     }
 
@@ -140,7 +140,7 @@ const login = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Đăng nhập thành công',
+      message: 'Login successful',
       data: {
         user: userResponse,
         token,
@@ -152,7 +152,7 @@ const login = async (req, res) => {
     console.error('Login error:', error);
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi đăng nhập: ' + error.message
+      message: 'Error logging in: ' + error.message
     });
   }
 };
@@ -166,7 +166,7 @@ const getProfile = async (req, res) => {
         
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy user'
+        message: 'User not found'
       });
     }
 
@@ -176,7 +176,7 @@ const getProfile = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Lấy thông tin hồ sơ thành công',
+      message: 'Profile retrieved successfully',
       data: userResponse
     });
 
@@ -184,7 +184,7 @@ const getProfile = async (req, res) => {
     console.error('Get profile error:', error);
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi lấy hồ sơ: ' + error.message
+      message: 'Error getting profile: ' + error.message
     });
   }
 };

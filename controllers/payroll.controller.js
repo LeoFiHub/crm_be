@@ -22,14 +22,14 @@ const getAllPayrolls = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Lấy danh sách payrolls thành công',
+      message: 'Get payrolls list successfully',
       data: payrolls,
       count: payrolls.length
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi lấy danh sách payrolls: ' + error.message
+      message: 'Error getting payrolls list: ' + error.message
     });
   }
 };
@@ -56,19 +56,19 @@ const getPayrollById = async (req, res) => {
     if (!payroll) {
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy payroll'
+        message: 'Payroll not found'
       });
     }
     
     res.status(200).json({
       success: true,
-      message: 'Lấy thông tin payroll thành công',
+      message: 'Get payroll successfully',
       data: payroll
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi lấy thông tin payroll: ' + error.message
+      message: 'Error getting payroll: ' + error.message
     });
   }
 };
@@ -81,16 +81,16 @@ const createPayroll = async (req, res) => {
     if (!id_employee || !amount || !payday) {
       return res.status(400).json({
         success: false,
-        message: 'id_employee, amount và payday là bắt buộc'
+        message: 'id_employee, amount and payday are required'
       });
     }
 
-    // Kiểm tra employee có tồn tại không
+    // Check if employee exists
     const employee = await User.findByPk(id_employee);
     if (!employee) {
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy employee'
+        message: 'Employee not found'
       });
     }
     
@@ -115,13 +115,13 @@ const createPayroll = async (req, res) => {
     
     res.status(201).json({
       success: true,
-      message: 'Tạo payroll thành công',
+      message: 'Payroll created successfully',
       data: payrollWithEmployee
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi tạo payroll: ' + error.message
+      message: 'Error creating payroll: ' + error.message
     });
   }
 };
@@ -137,7 +137,7 @@ const updatePayroll = async (req, res) => {
     if (!payroll) {
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy payroll'
+        message: 'Payroll not found'
       });
     }
 
@@ -172,13 +172,13 @@ const updatePayroll = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      message: 'Cập nhật payroll thành công',
+      message: 'Payroll updated successfully',
       data: updatedPayroll
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi cập nhật payroll: ' + error.message
+      message: 'Error updating payroll: ' + error.message
     });
   }
 };
@@ -193,7 +193,7 @@ const deletePayroll = async (req, res) => {
     if (!payroll) {
       return res.status(404).json({
         success: false,
-        message: 'Không tìm thấy payroll'
+        message: 'Payroll not found'
       });
     }
     
@@ -201,12 +201,12 @@ const deletePayroll = async (req, res) => {
     
     res.status(200).json({
       success: true,
-      message: 'Xóa payroll thành công'
+      message: 'Payroll deleted successfully'
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi xóa payroll: ' + error.message
+      message: 'Error deleting payroll: ' + error.message
     });
   }
 };
@@ -235,14 +235,14 @@ const getPayrollsByEmployee = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: 'Lấy danh sách payrolls của employee thành công',
+      message: 'Get payrolls by employee successfully',
       data: payrolls,
       count: payrolls.length
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi lấy payrolls của employee: ' + error.message
+      message: 'Error getting payrolls by employee: ' + error.message
     });
   }
 };
@@ -271,14 +271,14 @@ const getPayrollsByStatus = async (req, res) => {
 
     res.status(200).json({
       success: true,
-      message: `Lấy danh sách payrolls có status ${status} thành công`,
+      message: `Get payrolls with status ${status} successfully`,
       data: payrolls,
       count: payrolls.length
     });
   } catch (error) {
     res.status(500).json({
       success: false,
-      message: 'Lỗi khi lấy payrolls theo status: ' + error.message
+      message: 'Error getting payrolls by status: ' + error.message
     });
   }
 };

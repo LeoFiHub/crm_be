@@ -9,26 +9,26 @@ const {
   getPayrollsByEmployee,
   getPayrollsByStatus
 } = require('../controllers/payroll.controller');
+const authMiddleware = require('../middleware/auth.middleware');
+const { requireAccounting } = require('../middleware/role.middleware');
 
 // GET /api/payrolls - Lấy tất cả payrolls
-router.get('/', getAllPayrolls);
+router.get('/', authMiddleware, getAllPayrolls);
 
 // GET /api/payrolls/employee/:employeeId - Lấy payrolls theo employee
-router.get('/employee/:employeeId', getPayrollsByEmployee);
+router.get('/employee/:employeeId', authMiddleware, getPayrollsByEmployee);
 
 // GET /api/payrolls/status/:status - Lấy payrolls theo status
-router.get('/status/:status', getPayrollsByStatus);
+router.get('/status/:status', authMiddleware, requireAccounting, getPayrollsByStatus);
 
 // GET /api/payrolls/:id - Lấy payroll theo ID
-router.get('/:id', getPayrollById);
+router.get('/:id',authMiddleware, getPayrollById);
 
 // POST /api/payrolls - Tạo payroll mới
-router.post('/', createPayroll);
-
+router.post('/', authMiddleware, requireAccounting, createPayroll);
 // PUT /api/payrolls/:id - Cập nhật payroll
-router.put('/:id', updatePayroll);
-
+router.put('/:id', authMiddleware, requireAccounting, updatePayroll);
 // DELETE /api/payrolls/:id - Xóa payroll
-router.delete('/:id', deletePayroll);
+router.delete('/:id',authMiddleware, requireAccounting, deletePayroll);
 
 module.exports = router;
