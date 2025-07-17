@@ -9,12 +9,12 @@ const getAllPayrolls = async (req, res) => {
         {
           model: User,
           as: 'employee',
-          attributes: ['id', 'fullName', 'email', 'role', 'walletAddress']
+          // attributes: ['id', 'fullName', 'email', 'role', 'walletAddress', 'dateOfBirth']
         },
         {
           model: User,
           as: 'approver',
-          attributes: ['id', 'fullName', 'email', 'role']
+          // attributes: ['id', 'fullName', 'email', 'role']
         }
       ],
       order: [['createdAt', 'DESC']]
