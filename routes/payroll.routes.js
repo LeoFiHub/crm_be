@@ -7,7 +7,8 @@ const {
   updatePayroll,
   deletePayroll,
   getPayrollsByEmployee,
-  getPayrollsByStatus
+  getPayrollsByStatus,
+  putApprovePayroll
 } = require('../controllers/payroll.controller');
 const authMiddleware = require('../middleware/auth.middleware');
 const { requireAccounting } = require('../middleware/role.middleware');
@@ -30,5 +31,10 @@ router.post('/', authMiddleware, requireAccounting, createPayroll);
 router.put('/:id', authMiddleware, requireAccounting, updatePayroll);
 // DELETE /api/payrolls/:id - Xóa payroll
 router.delete('/:id',authMiddleware, requireAccounting, deletePayroll);
+
+
+//chỉ đổi status từ 'pending' sang 'approved'
+router.put('/approve/:id', authMiddleware, requireAccounting, putApprovePayroll);
+
 
 module.exports = router;

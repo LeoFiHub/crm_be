@@ -283,6 +283,47 @@ const getPayrollsByStatus = async (req, res) => {
   }
 };
 
+
+// APPROVE PAYROLL
+const putApprovePayroll = async (req, res) => {
+  try {
+    const { id } = req.params;
+    
+    const payroll = await PayrollSchedule.findByPk(id);
+    
+    if (!payroll) {
+      return res.status(404).json({
+        success: false,
+        message: 'Payroll not found'
+      });
+    }
+
+    // Chỉ cho phép đổi status từ 'pending' sang 'approved'
+    if (payroll.status !== 'pending') {
+      return res.status(400).json({
+        success: false,
+        message: 'Payroll can only be approved when status is pending'
+      });
+    }
+
+    // Cập nhật status và lưu người duyệt
+    payroll.status = 'approved';
+    payroll.approved_by = req.userId;
+    await payroll.save();
+
+    res.status(200).json({
+      success: true,
+      message: 'Payroll approved successfully',
+      data: payroll
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error approving payroll: ' + error.message
+    });
+  }
+};
+
 module.exports = {
   getAllPayrolls,
   getPayrollById,
@@ -290,5 +331,6 @@ module.exports = {
   updatePayroll,
   deletePayroll,
   getPayrollsByEmployee,
-  getPayrollsByStatus
+  getPayrollsByStatus,
+  putApprovePayroll
 };
