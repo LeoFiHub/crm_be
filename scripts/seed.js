@@ -19,7 +19,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0101',
                 walletAddress: '0x1a2b3c4d5e6f7890abcdef1234567890',
-                salary: 15000000,
+                salary: 1800,
                 status: 'active',
                 role: 'employee',
             },
@@ -29,7 +29,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0102',
                 walletAddress: '0x2b3c4d5e6f7890abcdef1234567890ab',
-                salary: 18000000,
+                salary: 2100,
                 status: 'active',
                 role: 'employee',
             },
@@ -39,7 +39,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0103',
                 walletAddress: '0x3c4d5e6f7890abcdef1234567890abcd',
-                salary: 16500000,
+                salary: 1700,
                 status: 'inactive',
                 role: 'employee',
             },
@@ -49,7 +49,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0104',
                 walletAddress: '0x4d5e6f7890abcdef1234567890abcdef',
-                salary: 17200000,
+                salary: 1950,
                 status: 'active',
                 role: 'employee',
             },
@@ -59,7 +59,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0105',
                 walletAddress: '0x5e6f7890abcdef1234567890abcdef12',
-                salary: 19500000,
+                salary: 2200,
                 status: 'active',
                 role: 'employee',
             },
@@ -71,7 +71,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0201',
                 walletAddress: '0x6f7890abcdef1234567890abcdef1234',
-                salary: 25000000,
+                salary: 3200,
                 status: 'active',
                 role: 'accounting',
             },
@@ -81,7 +81,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0202',
                 walletAddress: '0x7890abcdef1234567890abcdef123456',
-                salary: 23000000,
+                salary: 3050,
                 status: 'active',
                 role: 'accounting',
             },
@@ -93,7 +93,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0301',
                 walletAddress: '0x890abcdef1234567890abcdef1234567',
-                salary: 28000000,
+                salary: 3500,
                 status: 'active',
                 role: 'hr',
             },
@@ -103,7 +103,7 @@ async function seed() {
                 password: 'password123',
                 phoneNumber: '+1-555-0302',
                 walletAddress: '0x90abcdef1234567890abcdef12345678',
-                salary: 26000000,
+                salary: 3300,
                 status: 'active',
                 role: 'hr',
             },
@@ -121,14 +121,14 @@ async function seed() {
             // January payrolls
             {
                 id_employee: users[0].id, // John Smith
-                amount: 15000000,
+                amount: 1800,
                 stablecoin_type: 'USDT',
                 payday: '2025-01-31',
                 status: 'pending',
             },
             {
                 id_employee: users[1].id, // Sarah Johnson
-                amount: 18000000,
+                amount: 2100,
                 stablecoin_type: 'USDT',
                 payday: '2025-01-31',
                 status: 'approved',
@@ -136,7 +136,7 @@ async function seed() {
             },
             {
                 id_employee: users[2].id, // Michael Brown
-                amount: 16500000,
+                amount: 1700,
                 stablecoin_type: 'USDC',
                 payday: '2025-01-31',
                 status: 'rejected',
@@ -144,7 +144,7 @@ async function seed() {
             },
             {
                 id_employee: users[3].id, // Emily Davis
-                amount: 17200000,
+                amount: 1950,
                 stablecoin_type: 'USDT',
                 payday: '2025-01-31',
                 status: 'paid',
@@ -152,7 +152,7 @@ async function seed() {
             },
             {
                 id_employee: users[4].id, // David Wilson
-                amount: 19500000,
+                amount: 2200,
                 stablecoin_type: 'USDT',
                 payday: '2025-01-31',
                 status: 'approved',
@@ -162,21 +162,21 @@ async function seed() {
             // February payrolls
             {
                 id_employee: users[0].id, // John Smith
-                amount: 15000000,
+                amount: 1800,
                 stablecoin_type: 'USDT',
                 payday: '2025-02-28',
                 status: 'pending',
             },
             {
                 id_employee: users[1].id, // Sarah Johnson
-                amount: 18000000,
+                amount: 2100,
                 stablecoin_type: 'USDT',
                 payday: '2025-02-28',
                 status: 'pending',
             },
             {
                 id_employee: users[3].id, // Emily Davis
-                amount: 17200000,
+                amount: 1950,
                 stablecoin_type: 'USDC',
                 payday: '2025-02-28',
                 status: 'approved',
@@ -186,7 +186,7 @@ async function seed() {
             // March payrolls
             {
                 id_employee: users[4].id, // David Wilson
-                amount: 19500000,
+                amount: 2200,
                 stablecoin_type: 'USDT',
                 payday: '2025-03-31',
                 status: 'pending',
@@ -195,7 +195,7 @@ async function seed() {
             // Accounting and HR payrolls
             {
                 id_employee: users[5].id, // Lisa Anderson (accounting)
-                amount: 25000000,
+                amount: 3200,
                 stablecoin_type: 'USDT',
                 payday: '2025-01-31',
                 status: 'paid',
@@ -203,7 +203,7 @@ async function seed() {
             },
             {
                 id_employee: users[6].id, // Robert Taylor (accounting)
-                amount: 23000000,
+                amount: 3050,
                 stablecoin_type: 'USDT',
                 payday: '2025-01-31',
                 status: 'approved',
@@ -211,7 +211,7 @@ async function seed() {
             },
             {
                 id_employee: users[7].id, // Jessica Martinez (hr)
-                amount: 28000000,
+                amount: 3500,
                 stablecoin_type: 'USDT',
                 payday: '2025-01-31',
                 status: 'paid',
