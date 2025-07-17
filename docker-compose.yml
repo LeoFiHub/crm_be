@@ -1,0 +1,44 @@
+services:
+  # MySQL Database
+  db:
+    image: mysql:8.0
+    restart: always
+    environment:
+      MYSQL_ROOT_PASSWORD: rootpassword
+      MYSQL_DATABASE: onchain_CRM_db
+      MYSQL_USER: crm_user
+      MYSQL_PASSWORD: crm_password
+    ports:
+      - "3306:3306"
+    volumes:
+      - db_data:/var/lib/mysql
+      - ./init-db:/docker-entrypoint-initdb.d
+    healthcheck:
+      test: ["CMD", "mysqladmin", "ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
+
+  # Node.js App
+  app:
+    build: .
+    restart: always
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DB_HOST=db
+      - DB_PORT=3306
+      - DB_USER=crm_user
+      - DB_PASSWORD=crm_password
+      - DB_NAME=onchain_CRM_db
+      - JWT_SECRET=your_super_secret_jwt_key_here_2024
+      - JWT_EXPIRES_IN=7d
+      - NODE_ENV=production
+    ports:
+      - "3000:3000"
+    volumes:
+      - .:/app
+      - /app/node_modules
+
+volumes:
+  db_data:
