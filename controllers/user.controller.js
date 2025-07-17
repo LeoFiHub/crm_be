@@ -21,6 +21,27 @@ const getAllUsers = async (req, res) => {
   }
 };
 
+// GET ALL EMPLOYEES
+const getAllEmployees = async (req, res) => {
+  try {
+    const employees = await User.findAll({
+      where: { role: 'employee' },
+      attributes: { exclude: ['password'] }
+    });
+    res.status(200).json({
+      success: true,
+      message: 'Get employees list successfully',
+      data: employees,
+      count: employees.length
+    });
+  } catch (error) {
+    res.status(500).json({
+      success: false,
+      message: 'Error getting employees list: ' + error.message
+    });
+  }
+};
+
 // GET USER BY ID
 const getUserById = async (req, res) => {
   try {
@@ -187,5 +208,6 @@ module.exports = {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getAllEmployees
 };

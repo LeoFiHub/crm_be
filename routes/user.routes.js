@@ -5,13 +5,17 @@ const {
   getUserById,
   createUser,
   updateUser,
-  deleteUser
+  deleteUser,
+  getAllEmployees
 } = require('../controllers/user.controller');
 const authMiddleware = require('../middleware/auth.middleware');
 const { requireAccounting } = require('../middleware/role.middleware');
 
 // GET /api/users - Lấy tất cả users
 router.get('/', authMiddleware, requireAccounting, getAllUsers);
+
+// GET ALL EMPLOYEES
+router.get('/employees', authMiddleware, requireAccounting, getAllEmployees);
 
 // GET /api/users/:id - Lấy user theo ID
 router.get('/:id', authMiddleware, requireAccounting, getUserById);
@@ -24,5 +28,7 @@ router.put('/:id', authMiddleware, requireAccounting, updateUser);
 
 // DELETE /api/users/:id - Xóa user
 router.delete('/:id', authMiddleware, requireAccounting, deleteUser);
+
+
 
 module.exports = router;
