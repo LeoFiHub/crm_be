@@ -69,7 +69,14 @@ npm start
 
 ### Database
 
-- Host: localhost:3306
+- Host: localhost:3307 (Docker)
 - User: crm_user
 - Password: crm_password
 - Database: onchain_CRM_db
+
+**Lưu ý:** Nếu bị lỗi port conflict, đổi port trong `docker-compose.yml`:
+
+```yaml
+ports:
+  - "3308:3306"  # Thay 3308 bằng port khác
+```
