@@ -142,7 +142,7 @@ const login = async (req, res) => {
       success: true,
       message: 'Login successful',
       data: {
-        user: userResponse,
+        ...userResponse,
         token,
         expiresIn: process.env.JWT_EXPIRES_IN || '7d'
       }
