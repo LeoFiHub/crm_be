@@ -189,8 +189,93 @@ const getProfile = async (req, res) => {
   }
 };
 
+//CAP NHAT HO SO
+// Cập nhật thông tin người dùng nhân viên cập nhật được các trường địa chỉ ví, fullname, email, phonenumber, dateofbirth, gender, address, wallet address
+const updateProfile = async (req, res) => {
+  try {
+    const userId = req.userId;
+    const {
+      fullName,
+      email,
+      phoneNumber,
+      dateOfBirth,
+      gender,
+      address,
+      walletAddress
+    } = req.body;
+
+    // Find user
+    const user = await User.findByPk(userId);
+    if (!user) {
+      return res.status(404).json({
+        success: false,
+        message: 'User not found'
+      });
+    }
+
+    // Only update allowed fields
+    if (email) {
+      // Validate email format
+      const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+      if (!emailRegex.test(email)) {
+        return res.status(400).json({
+          success: false,
+          message: 'Invalid email'
+        });
+      }
+      // Check if email already exists for another user
+      const existingUser = await User.findOne({ where: { email } });
+      if (existingUser && existingUser.id !== userId) {
+        return res.status(400).json({
+          success: false,
+          message: 'Email already exists'
+        });
+      }
+      user.email = email;
+    }
+    if (fullName) user.fullName = fullName;
+    if (phoneNumber) user.phoneNumber = phoneNumber;
+    if (dateOfBirth) user.dateOfBirth = dateOfBirth;
+    if (gender) user.gender = gender;
+    if (address) user.address = address;
+    if (walletAddress) user.walletAddress = walletAddress;
+
+    await user.save();
+
+    // Remove password from response
+    const userResponse = { ...user.toJSON() };
+    delete userResponse.password;
+
+    // Generate new token with updated info
+    const token = jwt.sign(
+      { userId: user.id, email: user.email, fullName: user.fullName, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: process.env.JWT_EXPIRES_IN || '7d' }
+    );
+
+    res.status(200).json({
+      success: true,
+      message: 'Profile updated successfully',
+      data: {
+        user: userResponse,
+        token,
+        expiresIn: process.env.JWT_EXPIRES_IN || '7d'
+      }
+    });
+  } catch (error) {
+    console.error('Update profile error:', error);
+    res.status(500).json({
+      success: false,
+      message: 'Error updating profile: ' + error.message
+    });
+  }
+};
+
+
+
 module.exports = {
   register,
   login,
-  getProfile
+  getProfile,
+  updateProfile
 };

@@ -4,7 +4,8 @@ const router = express.Router();
 const {
   register,
   login,
-  getProfile
+  getProfile,
+  updateProfile
 } = require('../controllers/auth.controller');
 const authMiddleware = require('../middleware/auth.middleware');
 const { requireHR } = require('../middleware/role.middleware'); // Import role middleware
@@ -17,6 +18,9 @@ router.post('/login', login);
 
 // GET /api/auth/profile 
 router.get('/profile', authMiddleware, getProfile);
+
+// PUT /api/auth/profile 
+router.put('/profile', authMiddleware, updateProfile);
 
 
 module.exports = router;
