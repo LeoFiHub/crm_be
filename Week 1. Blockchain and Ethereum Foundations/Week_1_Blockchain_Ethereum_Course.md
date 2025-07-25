@@ -38,7 +38,7 @@
 
 - [x] **Lý thuyết (10 phút)**: *Đọc nhanh “Transactions” (ethereum.org). Transaction là yêu cầu thay đổi trạng thái blockchain, được nhóm vào block.*
 1. **Transaction**: Là một hành động cụ thể, ví dụ như chuyển ETH, tương tác với smart contract.
-2. **Block**: Nhóm các transaction, chứa thông tin như Block Number, Transactions, Miner.
+2. **Block**: Nhóm các transaction, chứa thông tin như Block Number, Transactions, Miner. Nó chứa các transaction của nhiều smart contract khác nhau, điều này tạo ra tính phi tập trung.
 
 
 - [x] **Thực hành (20 phút)**: Trên Sepolia Etherscan, tìm một block, ghi chú Block Number, Transactions, và Miner.\
@@ -48,14 +48,27 @@
   - **Miner:** 0x3826539Cbd8d68DCF119e80B994557B4278CeC9f -> người khai thác block này.\
 ---
 
-- [ ] ==Ngày 3: Ethereum Virtual Machine (EVM)==
+- [x] ==Ngày 3: Ethereum Virtual Machine (EVM)==
 
 **Mục tiêu**: Hiểu EVM thực thi smart contract.\
 **Kết quả**: Biết EVM là gì, vai trò trong việc chạy smart contract.
 **Hoạt động (30 phút)**:
 
-- **Lý thuyết (10 phút)**: Đọc “What is EVM” (dydx.xyz). EVM là máy tính phi tập trung chạy code smart contract.
-- **Thực hành (20 phút)**: Trên Sepolia Etherscan, tìm giao dịch gọi smart contract (có “Contract” trong chi tiết), ghi chú Transaction Hash và Gas Used.\
+- **Lý thuyết (10 phút)**: Đọc “What is EVM” (dydx.xyz). 
+1. **Ethereum**: là một cái blockchain chung.
+2. **EVM**: là một cái "CPU" mà Ethereum cung cấp, nơi hỗ trợ thực thi tất cả các hoạt động của smart contact: deloy, tương tác với contract và thực hiện tính toán. Ethereum lấy phí là ETH.
+3. **Smart Contract**: Ai cũng có thể xem code và dữ liệu trong smart contract. Mỗi smart contract đều có một địa chỉ riêng.
+4. **Gas fee**: xài trong lúc deloy smart contract, thực thi smart contract, gom transaction vào block.
+
+- **Thực hành (20 phút)**: Trên Sepolia Etherscan, tìm giao dịch gọi smart contract (có “Contract” trong chi tiết), ghi chú Transaction Hash và Gas Used.
+
+  - ***Ví dụ:*** https://sepolia.etherscan.io/tx/0x09f271ed00ab7ff545694f1f9282d6c8a357aea142429dd22d9c8a006edbbe5b
+    - **Transaction Hash**: `0x09f271ed00ab7ff545694f1f9282d6c8a357aea142429dd22d9c8a006edbbe5b`
+    - **Gas Used**: `33,679` / `40,844`
+      - Phí gas là phí để thực hiện 1 transaction. Không phải trong transaction.
+      - Người gửi là người quyết định ==gas limit== và ==gas price==, Ethereum chỉ cung cấp cơ chế ước lượng phí gas gọi là `gas estimate`.
+      - Nếu đặt phí gas quá thấp, transaction sẽ không được thực hiện (revert). Nếu đặt quá cao, bạn sẽ mất phí không cần thiết.
+    - **Trong giao dịch này**: hàm `mint(address to)` được gọi tại địa chỉ smart contract `0x3eDF60dd017aCe33A0220F78741b5581C385A1BA`.Địa chỉ nhận sẽ được truyền vào tham số `to` của hàm mint để nhận 10 USDZ.
 
 
 ---
