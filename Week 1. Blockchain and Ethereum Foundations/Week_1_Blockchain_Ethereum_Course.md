@@ -92,19 +92,29 @@
       - **Gas Used**: ==50,235 | 40,271== (80.17%)
 ---
 
-- [ ] ==Ngày 5: Nodes và Testnet==
+- [x] ==Ngày 5: Nodes và Testnet==
 
 **Mục tiêu**: Hiểu nodes và testnet.\
 **Kết quả**: Biết nodes đồng bộ blockchain, testnet dùng để thử nghiệm.
 **Hoạt động (30 phút)**:
 
-- **Lý thuyết (10 phút)**: Đọc nhanh “Nodes and Clients” (ethereum.org). Nodes lưu trữ blockchain, testnet (như Sepolia) dùng để thử nghiệm.
+- **Lý thuyết (10 phút)**: Đọc nhanh “Nodes and Clients” (ethereum.org). 
+**Một số loại node trên Ethereum**:
+  1. **Full Node**: Lưu trữ toàn bộ lịch sử giao dịch và trạng thái của blockchain ở ==hiện tại==.
+  2. **Light Node**: Chỉ lưu trữ một phần nhỏ dữ liệu, phụ thuộc vào full node để xác minh giao dịch.
+  3. **Archive Node**: Lưu trữ tất cả dữ liệu của blockchain, bao gồm cả dữ liệu đã bị xóa. Này là ==cha== mấy cái kia.
+**Khi chuyển sang PoS**:
+  4. Execution Clients: Thực hiện các giao dịch và smart contract, tương tác với EVM.
+  5. Consensus Clients: Đảm bảo tính đồng thuận của mạng, xác nhận các block mới và giao dịch.
+
 - **Thực hành (20 phút)**: Cài MetaMask (MetaMask Docs), kết nối testnet Sepolia.\
-  
+- [x] Cài đặt MetaMask
+- [x] Kết nối với Sepolia Testnet
+
 
 ---
 
-- [ ] ==Ngày 6: Thực hành với Testnet==
+- [x] ==Ngày 6: Thực hành với Testnet==
 
 **Mục tiêu**: Làm quen MetaMask và test ETH.\
 **Kết quả**: Kết nối MetaMask với Sepolia, nhận test ETH thành công.
@@ -112,7 +122,9 @@
 
 - **Lý thuyết (5 phút)**: Xem nhanh cách dùng MetaMask (MetaMask Docs).
 - **Thực hành (25 phút)**: Yêu cầu test ETH từ Sepolia Faucet, kiểm tra số dư trên MetaMask.\
-  
+- [x] Nhận test ETH
+  - https://app.nebulum.one/sepolia_faucet
+  - https://console.optimism.io/faucet
 
 ---
 
