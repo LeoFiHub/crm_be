@@ -73,16 +73,23 @@
 
 ---
 
-- [ ] ==Ngày 4: Gas trong Ethereum==
+- [x] ==Ngày 4: Gas trong Ethereum==
 
 **Mục tiêu**: Hiểu gas và vai trò của nó.\
 **Kết quả**: Hiểu gas là gì, tại sao cần để duy trì mạng Ethereum.
+==Chuyển ETH xài ít gas hơn gọi smart contract.==
 **Hoạt động (30 phút)**:
 
-- **Lý thuyết (10 phút)**: Đọc “Gas” (ethereum.org). Gas là phí để thực thi giao dịch/smart contract.
-- **Thực hành (20 phút)**: Trên Sepolia Etherscan, so sánh Gas Used của giao dịch chuyển ETH và gọi smart contract.\
-  
-
+- **Lý thuyết (10 phút)**: Đọc “Gas” (ethereum.org). Gas là phí để thực thi giao dịch/smart contract. ==(Trên ngày 3 có nhắc)==
+- **Thực hành (20 phút)**: Trên Sepolia Etherscan, so sánh Gas Used của giao dịch chuyển ETH và gọi smart contract.
+1. **Chuyển ETH**: https://sepolia.etherscan.io/tx/0x33de6de7d6095781d5f81aa652119ed4c487d982b6b1228682bcb42d2bfd6126
+    - **Địa chỉ gửi**: 0x413b84D3E93901C2c103DA3a10A074a69dd1Bb42
+    - **Địa chỉ nhận**: 0x675B4429FcdF076C01fF149620f4F009C558dAaE => này là địa chỉ của người nhận (nhấn vào sẽ thấy cột ==Amount khác 0==)
+    - **Value**: 0.00000151 ETH
+    - **Gas Used**: ==21,000 | 21,000== (100%)
+  2. **Gọi Smart Contract**: https://sepolia.etherscan.io/tx/0x33b8f09b4c1a26efc8a921e366d8dd13d99c280db7942710cb7f24c1f9f7d0bd
+      - **Địa chỉ nhận**: 0x1c7D4B196Cb0C7B01d743Fbc6116a902379C7238 => này là địa chỉ của smart contract (nhấn vào sẽ thấy cột ==Amount nhiều số 0==)
+      - **Gas Used**: ==50,235 | 40,271== (80.17%)
 ---
 
 - [ ] ==Ngày 5: Nodes và Testnet==
