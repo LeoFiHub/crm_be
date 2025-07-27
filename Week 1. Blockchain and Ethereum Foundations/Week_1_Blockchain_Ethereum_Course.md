@@ -99,9 +99,10 @@
 **Hoạt động (30 phút)**:
 
 - **Lý thuyết (10 phút)**: Đọc nhanh “Nodes and Clients” (ethereum.org). 
+**Node**: Máy tính lưu trữ bản sao blockchain, đồng bộ hóa và xác minh giao dịch.\
 **Một số loại node trên Ethereum**:
   1. **Full Node**: Lưu trữ toàn bộ lịch sử giao dịch và trạng thái của blockchain ở ==hiện tại==.
-  2. **Light Node**: Chỉ lưu trữ một phần nhỏ dữ liệu, phụ thuộc vào full node để xác minh giao dịch.
+  2. **Light Node**: Chỉ lưu trữ một phần nhỏ dữ liệu, phụ thuộc vào full node để xác minh giao dịch. ==Này đang dùng nhiều nhất.==
   3. **Archive Node**: Lưu trữ tất cả dữ liệu của blockchain, bao gồm cả dữ liệu đã bị xóa. Này là ==cha== mấy cái kia.
 **Khi chuyển sang PoS**:
   4. Execution Clients: Thực hiện các giao dịch và smart contract, tương tác với EVM.
@@ -128,13 +129,26 @@
 
 ---
 
-- [ ] ==Ngày 7: Ôn tập và thực hành==
+- [x] ==Ngày 7: Ôn tập và thực hành==
 
 **Mục tiêu**: Củng cố kiến thức và thực hành.\
 **Kết quả**: Hiểu rõ các khái niệm cốt lõi, tra cứu thành thạo trên Etherscan.
+  - ==**Việc phải trả ETH**==: deploy smart contract, tương tác với smart contract và chuyển ETH.
+  - ==**Việc nhận ETH**==: nhận từ người khác, nhận từ faucet, làm validator (chạy fullnode và stake ít nhất 32 ETH)
+
 **Hoạt động (30 phút)**:
 
 - **Lý thuyết (10 phút)**: Ôn lại các khái niệm: blockchain, transaction, EVM, gas, nodes (ethereum.org).
+1. Ethereum cung cấp một blockchain công khai, cho phép người dùng viết và triển khai smart contract. 
+2. Các smart contract này được viết bằng các ngôn ngữ như Solidity và được thực thi bởi Ethereum Virtual Machine (EVM). 
+3. Khi người dùng deploy smart contract hoặc tương tác với nó, họ phải trả phí gas bằng ETH (hoặc Sepolia ETH trên testnet).
+4. Mỗi lần chuyển tiền hoặc gọi smart contract sẽ tạo ra một transaction
+5. Ethereum gom các transaction từ nhiều smart contract khác nhau vào một block để ==đảm bảo tính phi tập trung==. Đây là một phần quan trọng của cơ chế đồng thuận của Ethereum.
+6. Mạng lưới Ethereum bao gồm nhiều node, trong đó có full node (lưu trữ toàn bộ blockchain) và light node (lưu trữ một phần nhỏ blockchain). 
+7. Các cá nhân và tổ chức khác nhau trên khắp thế giới tự nguyện chạy full node để hỗ trợ mạng lưới. Chứ không phải chỉ có một Ethereum quản lý duy nhất. ==Ai cũng có thể chạy full node.==
+8. Do giới hạn về tài nguyên, hầu hết người dùng sử dụng light node hoặc các dịch vụ node để tương tác với mạng lưới Ethereum.
+
+
 - **Thực hành (20 phút)**: Trên Sepolia Etherscan, tìm một giao dịch smart contract, viết mô tả ngắn (50 từ) về giao dịch đó (Transaction Hash, Gas Used, mục đích).\
   
 
