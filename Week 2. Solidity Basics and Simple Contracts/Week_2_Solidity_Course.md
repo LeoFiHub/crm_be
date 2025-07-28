@@ -10,27 +10,38 @@
 
 ## Lịch trình học (7 ngày, 30 phút/ngày)
 
-### Ngày 1: Cú pháp cơ bản Solidity
+- [x]  ==Ngày 1: Cú pháp cơ bản Solidity==
 **Mục tiêu**: Hiểu cấu trúc contract và state variables.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Solidity Basics” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Contract là đơn vị code trên Ethereum, state variables lưu trữ dữ liệu trên blockchain.  
-- **Thực hành (20 phút)**: Mở [Remix IDE](https://remix.ethereum.org), tạo contract `HelloWorld`:
+- [x] **Lý thuyết (10 phút)**: Đọc “Solidity Basics” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Contract là đơn vị code trên Ethereum, state variables lưu trữ dữ liệu trên blockchain.  
+    1. **Solidity** là ngôn ngữ lập trình chính để viết smart contract trên Ethereum.
+    2. **Contract** là đơn vị code cơ bản trên Ethereum, tương tự như class trong OOP.
+    3. **State variables** là biến lưu trữ dữ liệu trên blockchain, có thể truy cập từ bên ngoài. Lưu lại vĩnh viễn trên blockchain.
+    4. **Function** là các hàm trong contract, có thể được gọi để thực hiện logic. Này như hàm trong OOP.
+    5. **Visibility** (==public, private, internal, external==) xác định quyền truy cập vào state variables và functions.
+    6. **Constructor** là hàm đặc biệt được gọi khi contract được triển khai, dùng để khởi tạo state variables.
+- [x] **Thực hành (20 phút)**: Mở [Remix IDE](https://remix.ethereum.org), tạo contract `HelloWorld`.   Compile và deploy trên Remix (JavaScript VM). Gọi hàm `getMessage` để xem kết quả: (==trong thư mục Day1 có ảnh minh họa==)
   ```solidity
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract HelloWorld {
-      string public message = "Hello, World!";
+  // HelloWorld.sol
+   // SPDX-License-Identifier: MIT
+  pragma solidity ^0.8.0; // phiên bản solidity
+  //này là contract 
+  //mỗi file có thể có nhiều contract, nhưng khuyến nghị 1 file 1 contract
+  contract HelloWorld { 
+      // biến message là state variable có kiểu dữ liệu string
+      string public message = "Hello, World!"; 
+      //getMessage là function với visibility là public view
       function getMessage() public view returns (string memory) {
           return message;
       }
   }
   ```
-  Compile và deploy trên Remix (JavaScript VM). Gọi hàm `getMessage` để xem kết quả.  
+
 **Kết quả**: Hiểu cấu trúc contract, state variables, và cách deploy trên Remix.  
 
 ---
 
-### Ngày 2: Functions và Visibility
+- [ ] ==Ngày 2: Functions và Visibility==
 **Mục tiêu**: Hiểu functions và visibility (public, private, etc.).  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Đọc “Functions” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#functions)). Functions định nghĩa logic, visibility kiểm soát quyền truy cập.  
