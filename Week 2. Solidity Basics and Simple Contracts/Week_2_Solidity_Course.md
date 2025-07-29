@@ -41,30 +41,30 @@
 
 ---
 
-- [ ] ==Ngày 2: Functions và Visibility==
+- [x] ==Ngày 2: Functions và Visibility==
 **Mục tiêu**: Hiểu functions và visibility (public, private, etc.).  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Functions” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#functions)). Functions định nghĩa logic, visibility kiểm soát quyền truy cập.  
-- **Thực hành (20 phút)**: Trong Remix, tạo contract `Counter`:
+- **Lý thuyết (10 phút)**: Đọc “Functions” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#functions)). Functions định nghĩa logic, visibility kiểm soát quyền truy cập.  ==(các hàm trong contract, có thể được gọi để thực hiện logic. Này như hàm trong OOP.)==
+- **Thực hành (20 phút)**: Trong Remix, tạo contract `Counter`. Deploy và gọi `increment`, `getCount` để kiểm tra.:
   ```solidity
   // SPDX-License-Identifier: MIT
   pragma solidity ^0.8.0;
   contract Counter {
-      uint public count = 0;
-      function increment() public {
-          count += 1;
-      }
-      function getCount() public view returns (uint) {
-          return count;
-      }
+      uint count = 0; //khởi tạo biến bắt đầu là 0
+    function increament() public {
+        count = count + 1; // tăng giá trị lên một
+    } //này đã xài gas
+    function getCount() public view returns (uint) {
+        return count;
+    } // này không xài gas nếu gọi bằng "call", nhưng vẫn tốn phí execute vì cái gì mà gọi đến smart contract đều tốn phí này hết  
+
   }
-  ```
-  Deploy và gọi `increment`, `getCount` để kiểm tra.  
+  ```  
 **Kết quả**: Biết viết function, hiểu public/view, và tương tác với contract.  
 
 ---
 
-### Ngày 3: Data Types (uint, address, string)
+- [ ] ==Ngày 3: Data Types (uint, address, string)==
 **Mục tiêu**: Nắm các kiểu dữ liệu cơ bản.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Đọc “Data Types” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#data-types)). uint lưu số nguyên, address lưu địa chỉ Ethereum, string lưu chuỗi.  
