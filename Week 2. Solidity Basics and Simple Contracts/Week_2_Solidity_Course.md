@@ -64,31 +64,55 @@
 
 ---
 
-- [ ] ==Ngày 3: Data Types (uint, address, string)==
+- [x] ==Ngày 3: Data Types (uint, address, string)==
 **Mục tiêu**: Nắm các kiểu dữ liệu cơ bản.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Đọc “Data Types” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#data-types)). uint lưu số nguyên, address lưu địa chỉ Ethereum, string lưu chuỗi.  
-- **Thực hành (20 phút)**: Trong Remix, sửa contract `HelloWorld` thêm address:
-  ```solidity
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract HelloWorld {
-      string public message = "Hello, World!";
-      address public owner;
-      constructor() {
-          owner = msg.sender;
-      }
-      function getOwner() public view returns (address) {
-          return owner;
-      }
-  }
-  ```
-  Deploy và kiểm tra `owner`, `getOwner`.  
+    1. **uint**: Kiểu dữ liệu ==số nguyên không âm==, thường dùng để lưu trữ số lượng, giá trị. **int** là số nguyên có âm.
+    2. **address**: Kiểu dữ liệu lưu trữ địa chỉ của *ví, smart contract, địa chỉ người nhận hoặc gửi trong transaction.*
+    3. **string**: Kiểu dữ liệu lưu trữ chuỗi ký tự, thường dùng để lưu trữ thông tin văn bản. Không lưu địa chỉ ví bằng string vì nó không an toàn.
+    4. **msg**: Biến toàn cục chứa thông tin về transaction hiện tại, bao gồm địa chỉ người gọi (*msg.sender*), giá trị gửi (*msg.value*), dữ liệu gửi kèm (*msg.data*) và thời gian (*msg.timestamp*),...
+    5. **contructor**: Hàm đặc biệt được gọi khi contract được triển khai, dùng để khởi tạo giá trị ban đầu cho state variables. ==Chỉ được gọi 1 lần duy nhất khi deploy contract.==
+
+- **Thực hành (20 phút)**: Trong Remix, tạo contract `OwnerExample` để thực hành cả việc lưu địa chỉ ví người dùng và sử dụng constructor để khởi tạo giá trị ban đầu:
+    ```solidity
+        // SPDX-License-Identifier: MIT
+        pragma solidity ^0.8.0;
+        contract OwnerExample{
+                //tạo 2 địa chỉ là người owner và user mỗi lần gọi
+                address public owner;
+                address public userAddress;
+
+                //tạo contructor - này chỉ được gọi 1 lần khi deploy
+                constructor(){
+                    owner = msg.sender; // sử dụng biến toàn cục msg để lấy địa chỉ người gọi contructor này - người deploy
+                }
+                
+                // hàm trả về địa chỉ của owner - người deploy smart contract này - trả về kiểu dữ liệu là address
+                function getOwner() public view returns (address){
+                    return owner;
+                }
+
+                //hàm set địa chỉ của người gọi smart contract này
+                function setUserAddress() public {
+                    userAddress = msg.sender; //tương tự như trong contructor
+                }
+
+                //hàm lấy địa chỉ người gọi smart contract này
+                function getUserAddress() public view returns (address){
+                    return userAddress;
+                }
+            }
+    ```
+    Deploy contract, kiểm tra giá trị `owner` (địa chỉ ví deploy), gọi `setUserAddress` từ tài khoản khác rồi kiểm tra `userAddress` và các hàm `getOwner`, `getUserAddress` để hiểu rõ về `msg.sender` và constructor.
+
+
+
 **Kết quả**: Hiểu uint, address, string, và cách dùng `msg.sender`.  
 
 ---
 
-### Ngày 4: Mapping và Arrays
+- [ ] ==Ngày 4: Mapping và Arrays==
 **Mục tiêu**: Hiểu mapping và arrays.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Đọc “Mappings” và “Arrays” ([GeeksforGeeks](https://www.geeksforgeeks.org/solidity/solidity-basics-of-contracts/)). Mapping là bảng băm, arrays là danh sách.  
