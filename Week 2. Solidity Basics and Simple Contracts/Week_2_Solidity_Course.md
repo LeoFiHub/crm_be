@@ -112,79 +112,143 @@
 
 ---
 
-- [ ] ==Ngày 4: Mapping và Arrays==
+- [x] ==Ngày 4: Mapping và Arrays==
 **Mục tiêu**: Hiểu mapping và arrays.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Mappings” và “Arrays” ([GeeksforGeeks](https://www.geeksforgeeks.org/solidity/solidity-basics-of-contracts/)). Mapping là bảng băm, arrays là danh sách.  
-- **Thực hành (20 phút)**: Trong Remix, tạo contract `SimpleStorage`:
+- **Lý thuyết (10 phút)**: Đọc “Mappings” và “Arrays” ([GeeksforGeeks](https://www.geeksforgeeks.org/solidity/solidity-basics-of-contracts/)). 
+    1. **Mapping**: là kiểu dữ liệu lưu trữ cặp key-value. Giống với dictionary trong Python. `mapping(keyType => valueType) public myMapping` 
+    2. **Arrays**: danh sách các phần tử cùng kiểu. Có thể có 2 loại là mảng cố định (fixed-size) và mảng động (dynamic). `uint[] public myArray` là mảng động chứa các số nguyên không âm.
+- **Thực hành (20 phút)**: Trong Remix, tạo contract `SimpleStorage` .Deploy, gọi `setBalance`, `addNumber`, kiểm tra kết quả:
   ```solidity
   // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract SimpleStorage {
-      mapping(address => uint) public balances;
-      uint[] public numbers;
-      function setBalance(uint _value) public {
-          balances[msg.sender] = _value;
-      }
-      function addNumber(uint _num) public {
-          numbers.push(_num);
-      }
-  }
+    pragma solidity ^0.8.0;
+    contract SimpleStorage{
+        //===================MAPPING===================
+        //biến lưu số dư của từng địa chỉ ví
+        mapping(address => uint) public listBalanceOfUser;
+        //hàm setBalance để lưu số dư của từng địa chỉ ví
+        // _value là biến truyền hàm, phân biệt với biến toàn cục 
+        function setBalance(uint _value) public {
+            listBalanceOfUser[msg.sender] = _value;
+        }
+        //hàm getBalance để lấy số dư của từng địa chỉ ví
+        function getBalance(address _address) public view returns (uint){
+            return listBalanceOfUser[_address];
+        }
+
+        //===================ARRAY===================
+        uint[] public listNumber;
+        //hàm thêm 1 số vào listNumber
+        function addNumber(uint _numb) public {
+            listNumber.push(_numb);
+        }
+        //hàm in ra thứ tự của một phần tử trong mảng listNumber
+        function getListNumber(uint _index) public view returns (uint){
+            return listNumber[_index];
+        }
+        //hàm in ra toàn bộ nguyên cái listNumber
+        //uint[] là kiểu dữ liệu phức tạp nên cần từ khóa memory
+        function getAllListNumber() public view returns (uint[] memory){
+            return listNumber;
+        }
+
+    }
   ```
-  Deploy, gọi `setBalance`, `addNumber`, kiểm tra kết quả.  
+ 
 **Kết quả**: Biết dùng mapping và arrays để lưu dữ liệu.  
 
 ---
 
-### Ngày 5: Structs
+- [x] ==Ngày 5: Structs==
 **Mục tiêu**: Hiểu và sử dụng structs.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Structs” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#structs)). Structs nhóm dữ liệu liên quan.  
-- **Thực hành (20 phút)**: Trong Remix, tạo contract `UserRegistry`:
+- **Lý thuyết (10 phút)**: Đọc “Structs” ([freeCodeCamp](https://www.freecodeCamp.org/news/learn-solidity-handbook/#structs)). Gần giống với class trong OOP, chỉ khác là không có function/method.
+    ```solidity
+    struct User {
+        string name;
+        uint balance;
+    }
+    ```
+- **Thực hành (20 phút)**: Trong Remix, tạo contract `UserRegistry`. Deploy, gọi `register`, kiểm tra dữ liệu trong `users`. :
   ```solidity
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract UserRegistry {
-      struct User {
-          string name;
-          uint balance;
-      }
-      mapping(address => User) public users;
-      function register(string memory _name, uint _balance) public {
-          users[msg.sender] = User(_name, _balance);
-      }
-  }
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+    contract UserRegistry{
+        //struct về user
+        struct User {
+            string userName;
+            uint balance;
+        }
+        address userAddress;
+        //mapping lưu thông tin của users
+        mapping(address=>User) public users;
+
+        //hàm đăng ký user
+        function registry(string memory _username, uint _balance) public {
+            userAddress = msg.sender;
+            users[userAddress] = User(_username, _balance);
+        }
+
+        //hàm lấy thông tin user bằng address
+        function getInfo(address _userAddress) public view returns (User memory){
+            return users[_userAddress];
+        }
+        
+    }
   ```
-  Deploy, gọi `register`, kiểm tra dữ liệu trong `users`.  
+ 
 **Kết quả**: Biết tạo và sử dụng struct trong contract.  
 
 ---
 
-### Ngày 6: Modifier và Require
-**Mục tiêu**: Hiểu modifier và require.  
+### Ngày 6: Modifier, Require và Payable
+**Mục tiêu**: Hiểu modifier, require và payable.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Modifiers” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Modifier kiểm soát quyền truy cập, require kiểm tra điều kiện.  
-- **Thực hành (20 phút)**: Trong Remix, sửa contract `Counter`:
-  ```solidity
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract Counter {
-      uint public count = 0;
-      address public owner;
-      constructor() {
-          owner = msg.sender;
-      }
-      modifier onlyOwner() {
-          require(msg.sender == owner, "Not owner");
-          _;
-      }
-      function increment() public onlyOwner {
-          count += 1;
-      }
-  }
-  ```
-  Deploy, thử gọi `increment` từ tài khoản khác để thấy lỗi.  
-**Kết quả**: Hiểu cách dùng modifier và require để kiểm soát logic.  
+- **Lý thuyết (10 phút)**:  
+    - Đọc “Modifiers” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Modifier kiểm soát quyền truy cập, require kiểm tra điều kiện.
+    - Đọc “Payable” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#payable)). Hàm/payable address cho phép contract nhận Ether từ bên ngoài.
+        - **payable** là từ khóa cho phép contract nhận và xử lý Ether. Hàm hoặc địa chỉ phải khai báo payable mới nhận được tiền.
+        - Ví dụ: `function deposit() public payable {}` cho phép gửi Ether vào contract.
+
+- **Thực hành (20 phút)**: Trong Remix, sửa contract `Counter` để thêm chức năng nạp tiền (deposit) và rút tiền (withdraw) chỉ cho owner:
+    ```solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+    contract Counter {
+            uint public count = 0;
+            address public owner;
+
+            constructor() {
+                    owner = msg.sender;
+            }
+
+            modifier onlyOwner() {
+                    require(msg.sender == owner, "Not owner");
+                    _;
+            }
+
+            function increment() public onlyOwner {
+                    count += 1;
+            }
+
+            // Hàm nạp tiền vào contract (ai cũng có thể gọi)
+            function deposit() public payable {}
+
+            // Hàm kiểm tra số dư của contract
+            function getBalance() public view returns (uint) {
+                    return address(this).balance;
+            }
+
+            // Hàm rút tiền, chỉ owner được phép rút
+            function withdraw(uint _amount) public onlyOwner {
+                    require(address(this).balance >= _amount, "Insufficient balance");
+                    payable(owner).transfer(_amount);
+            }
+    }
+    ```
+    - Deploy, thử nạp tiền vào contract bằng nút "value" trên Remix, kiểm tra số dư với `getBalance`, thử rút tiền bằng `withdraw` từ owner và tài khoản khác để thấy lỗi.
+
+**Kết quả**: Hiểu cách dùng modifier, require để kiểm soát logic, và sử dụng payable để nhận/rút Ether trong contract.
 
 ---
 
