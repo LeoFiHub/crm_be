@@ -201,52 +201,139 @@
 
 ---
 
-### Ngày 6: Modifier, Require và Payable
+- [x] ==Ngày 6: Modifier, Require và Payable==
 **Mục tiêu**: Hiểu modifier, require và payable.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**:  
     - Đọc “Modifiers” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Modifier kiểm soát quyền truy cập, require kiểm tra điều kiện.
+        1. ==**Modifier**== là hàm đặc biệt dùng để kiểm tra điều kiện trước khi thực hiện hàm chính. Giúp tái sử dụng logic kiểm tra. Như if statement nhưng có thể dùng nhiều lần. Ví dụ về setRole `Financer` và `Manager`. Luồng đi:
+            1. Contructor set owner.
+            2. Một modifier `onlyOwner` kiểm tra người gọi có phải owner không.
+            3. Một modifier `onlyFinancer` kiểm tra người gọi có phải financer không.
+            4. Một modifier `onlyManager` kiểm tra người gọi có phải manager không.
+            5. Hàm `setFinancer` chỉ owner mới gọi được, dùng modifier `onlyOwner`.
+        ```solidity
+        //existing code 
+        // mot bien mapping lưu trữ địa chỉ của Financer
+        mapping(address => bool) public isFinancer;
+        //cần một contructor set owner
+        constructor() {
+            owner = msg.sender;
+        }
+        // 1 modifier dành cho owner
+        modifier onlyOwner() {
+            require(msg.sender == owner, "Not owner");
+            _;
+        }
+        // 1 modifier dành cho Financer
+        modifier onlyFinancer() {
+            require(isFinancer[msg.sender], "Not financer");
+            _;
+        }
+        // 1 modifier dành cho Manager
+        modifier onlyManager() {
+            require(msg.sender == manager, "Not manager");
+            _;
+        }
+        //hàm set role Financer
+        function setFinancer(address _financer) public onlyOwner {
+            isFinancer[_financer] = true; // đánh dấu địa chỉ là Financer
+        }
+        // hàm Approve chỉ Financer mới gọi được
+        function approve() public onlyFinancer {
+            // logic approve
+        }
+        ```
+        2. **Require**: hàm kiểm tra điều kiện, nếu sai sẽ tự động dừng hàm và hoàn trả gas chưa dùng. `Require` là chuẩn bảo vệ logic, kiểm tra điều kiện. 
+        ```solidity
+        // với IF
+        function withdraw(uint _amount) public {
+            if (balance < _amount) {
+                // chỉ cảnh báo, function vẫn chạy tiếp!
+            }
+            balance -= _amount; // vẫn bị trừ tiền dù không đủ!
+        }
+        // với Require
+        function withdraw(uint _amount) public {
+            require(balance >= _amount, "Insufficient balance"); // nếu không đủ tiền, dừng hàm và hoàn trả gas
+            balance -= _amount; // chỉ chạy nếu đủ tiền
+        }
+        ```
     - Đọc “Payable” ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#payable)). Hàm/payable address cho phép contract nhận Ether từ bên ngoài.
-        - **payable** là từ khóa cho phép contract nhận và xử lý Ether. Hàm hoặc địa chỉ phải khai báo payable mới nhận được tiền.
-        - Ví dụ: `function deposit() public payable {}` cho phép gửi Ether vào contract.
+        1. **Payable**: là từ khóa cho phép contract nhận Ether. Nếu không có từ khóa này, contract sẽ không thể nhận Ether.
+        2. **payable(address)**: là kiểu dữ liệu cho phép lưu địa chỉ ví có thể nhận Ether.
+        ```solidity
+        // Hàm nạp tiền vào contract
+        function deposit() public payable {
+            // msg.value là số Ether gửi vào
+        }
+        // hàm kiểm tra số dư của contract
+        function getBalance() public view returns (uint) {
+            return address(this).balance; // trả về số dư của contract
+        }
+        // hàm rút tiền, chỉ owner mới được phép rút
+        function withdraw(uint _amount) public onlyOwner {
+            require(address(this).balance >= _amount, "Insufficient balance");
+            payable(owner).transfer(_amount); // chuyển tiền cho owner
+        }
+        // hàm chuyển tiền cho một địa chỉ bất kỳ
+        function transfer(address payable _to, uint _amount) public onlyOwner{
+            require(address(this).balance >= _amount, "Insufficient balance");
+            _to.transfer(_amount); // chuyển tiền cho địa chỉ _to
+        }
+        
+        ```
 
-- **Thực hành (20 phút)**: Trong Remix, sửa contract `Counter` để thêm chức năng nạp tiền (deposit) và rút tiền (withdraw) chỉ cho owner:
+- **Thực hành (20 phút)**: Trong Remix, tạo contract `NTBank` để thêm chức năng nạp tiền (deposit) và rút tiền (withdraw) chỉ cho owner, chuyển tiền lương `PaySalary` dành cho `Financer`. Deploy, thử nạp tiền vào contract bằng nút "value" trên Remix, kiểm tra số dư với `getBalance`, thử rút tiền bằng `withdraw` từ owner và tài khoản khác để thấy lỗi.:
     ```solidity
     // SPDX-License-Identifier: MIT
     pragma solidity ^0.8.0;
-    contract Counter {
-            uint public count = 0;
-            address public owner;
+    import "hardhat/console.sol"; // import thư viện
+    contract NTBank{
+        address public owner;
+        // biến lưu các địa chỉ của finances
+        mapping(address => bool) public finances;
+        // này để set role Owner - người làm trùm cái smart contract này
+        constructor(){
+            owner = msg.sender;
+        }
+        //=======================MODIFIER===================
+        // modifier dành cho owner
+        modifier onlyOwner(){
+            require(msg.sender == owner, "Not Owner");
+            _;
+        }
+        //modifier dành cho financer
+        modifier onlyFinancer(){
+            require(finances[msg.sender], "Not Financer");
+            _;
+        }
+        //=======================XÀI MODIFIER=====================
+        //hàm addFinancer để Owner add vào danh sách
+        function addFinancer(address _financer) public onlyOwner{
+            finances[_financer] = true;
+        }
+        //=============================PAYABLE====================
+        //hàm nạp tiền vào contract
+        function deposit() public payable{
+            //=============================REQUIRE=============
+            //kiểm tra chuyển vào phải lớn hơn 0
+            require(msg.value > 0, "You must send some ETH");
+            console.log("Amount ETH", msg.value);
+        }
+        //hàm kiểm tra số dư
+        function getBalance() public view returns (uint){
+            return address(this).balance;
+        }
+        //hàm chuyển tiền cho một địa chỉ cụ thể
+        //address _to phải có payable
+        //==============XÀI PAYABLE==============
+        function paySalary(address payable _to, uint _amount) public{
+            _to.transfer(_amount);
+        }
 
-            constructor() {
-                    owner = msg.sender;
-            }
-
-            modifier onlyOwner() {
-                    require(msg.sender == owner, "Not owner");
-                    _;
-            }
-
-            function increment() public onlyOwner {
-                    count += 1;
-            }
-
-            // Hàm nạp tiền vào contract (ai cũng có thể gọi)
-            function deposit() public payable {}
-
-            // Hàm kiểm tra số dư của contract
-            function getBalance() public view returns (uint) {
-                    return address(this).balance;
-            }
-
-            // Hàm rút tiền, chỉ owner được phép rút
-            function withdraw(uint _amount) public onlyOwner {
-                    require(address(this).balance >= _amount, "Insufficient balance");
-                    payable(owner).transfer(_amount);
-            }
     }
     ```
-    - Deploy, thử nạp tiền vào contract bằng nút "value" trên Remix, kiểm tra số dư với `getBalance`, thử rút tiền bằng `withdraw` từ owner và tài khoản khác để thấy lỗi.
 
 **Kết quả**: Hiểu cách dùng modifier, require để kiểm soát logic, và sử dụng payable để nhận/rút Ether trong contract.
 
