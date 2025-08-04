@@ -10,29 +10,39 @@
 
 ## Lịch trình học (7 ngày, 30 phút/ngày)
 
-### Ngày 1: Inheritance và Function Overriding
+- [x] ==Ngày 1: Inheritance và Function Overriding==
 **Mục tiêu**: Hiểu cách sử dụng inheritance và overriding.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Inheritance” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)). Inheritance cho phép contract kế thừa code từ contract khác, overriding thay đổi hàm.  
-- **Thực hành (20 phút)**: Trong [Remix IDE](https://remix.ethereum.org), tạo hai contract:  
-  ```solidity
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract Base {
-      uint public number = 10;
-      function getNumber() public view virtual returns (uint) {
-          return number;
-      }
-  }
-  contract Child is Base {
-      function getNumber() public view override returns (uint) {
-          return number + 5;
-      }
-  }
-  ```
-  Deploy `Child`, gọi `getNumber`, kiểm tra kết quả (15).  
-**Kết quả**: Hiểu cách kế thừa và ghi đè hàm trong Solidity.  
-
+- **Lý thuyết (10 phút)**: Đọc “Inheritance” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)).         
+    1. **Inheritance** cho phép contract kế thừa code, biến và hàm từ contract khác.
+    2. **Contract con** có thể ghi đè hàm của contract cha bằng từ khóa `override`. **Contract cha** phải đánh dấu hàm là `virtual` để cho phép ghi đè.
+- **Thực hành (20 phút)**: Trong [Remix IDE](https://remix.ethereum.org), tạo hai file contract là `Base.sol` và `Child.sol`. Deploy `Base` trước, sau đó deploy `Child` kế thừa từ `Base`. Gọi hàm `getNumber` từ `Child` để kiểm tra kết quả (15).  :  
+    ```solidity
+  //Base.sol
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+    contract Base{
+        uint public count = 10;
+        //phải có từ khóa virtual
+        function getNumber() public view virtual returns (uint) {
+            return count;
+        }
+    }
+    ```
+    ```solidity
+    //Child.sol
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+    import 'contracts/Week3/Base.sol'; // import file contract
+    contract Child is Base{
+        //phải có từ khóa override
+        function getNumber() public view override returns (uint){
+            return count + 10; //lấy biến count bên Base + 10
+        }
+    }
+    ```
+  
+    **Kết quả**: Hiểu cách kế thừa và ghi đè hàm trong Solidity.  
 ---
 
 ### Ngày 2: Abstract Contracts
