@@ -45,28 +45,47 @@
     **Kết quả**: Hiểu cách kế thừa và ghi đè hàm trong Solidity.  
 ---
 
-### Ngày 2: Abstract Contracts
+- [x] ==Ngày 2: Abstract Contracts==
 **Mục tiêu**: Hiểu và sử dụng abstract contracts.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Abstract Contracts” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)). Abstract contract định nghĩa hàm mà không triển khai, dùng cho kế thừa.  
-- **Thực hành (20 phút)**: Trong Remix, tạo abstract contract:  
+- **Lý thuyết (10 phút)**: Đọc “Abstract Contracts” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)). 
+    1. **Abstract contract** là contract **không thể deploy** trực tiếp, ==chứa ít nhất một hàm== chưa được định nghĩa (abstract function). Chứa `abstract` trước từ khóa `contract` và `virtual` trước hàm chưa định nghĩa.
+    2. **Contract con** phải định nghĩa lại hàm abstract bằng từ khóa `override`.
+    ```solidity
+    // abstract contract Animal.sol
+    abstract contract Animal {
+        function makeSound() public pure virtual returns (string memory);
+    }
+    // contract con Dog.sol
+    contract Dog is Animal {
+        function makeSound() public pure override returns (string memory) {
+            return "Woof!";
+        }
+    }
+    ```    
+- **Thực hành (20 phút)**: Trong Remix, tạo abstract contract.  Deploy `Dog`, gọi `makeSound`, kiểm tra kết quả ("Woof!").:  
   ```solidity
   // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  abstract contract Animal {
-      function makeSound() public pure virtual returns (string memory);
-  }
-  contract Dog is Animal {
-      function makeSound() public pure override returns (string memory) {
-          return "Woof!";
-      }
-  }
+  // Animal.sol
+    pragma solidity ^0.8.0;
+    abstract contract Animal{ // có từ khóa abstract - contract cha
+        function makeSound() public pure  virtual returns (string memory){ //có từ khóa virtual
+            //không có thân hàm
+        }
+    }
   ```
-  Deploy `Dog`, gọi `makeSound`, kiểm tra kết quả ("Woof!").  
-**Kết quả**: Biết tạo và sử dụng abstract contract.  
-
----
-
+    ```solidity
+    // SPDX-License-Identifier: MIT
+    // Dog.sol
+    import 'contracts/Week3/Animal.sol';
+    pragma solidity ^0.8.0;
+    //kế thừa có chữ is
+    contract Dog is Animal{
+        function makeSound() public pure  override returns (string memory){ // có chữ override
+            return "GAU GAU GAU";
+        }
+    }
+    ```
 ### Ngày 3: Events trong Solidity
 **Mục tiêu**: Hiểu và sử dụng events để ghi log.  
 **Hoạt động (30 phút)**:  
