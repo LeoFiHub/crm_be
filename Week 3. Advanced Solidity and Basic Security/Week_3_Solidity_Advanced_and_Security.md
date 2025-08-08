@@ -86,25 +86,62 @@
         }
     }
     ```
-### Ngày 3: Events trong Solidity
+- [x] ==Ngày 3: Events trong Solidity==
 **Mục tiêu**: Hiểu và sử dụng events để ghi log.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Events” ([OpenZeppelin](https://docs.openzeppelin.com/learn/developing-smart-contracts)). Events lưu trữ dữ liệu trên blockchain, dùng để theo dõi hoạt động.  
-- **Thực hành (20 phút)**: Trong Remix, tạo contract với event:  
-  ```solidity
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract Counter {
-      uint public count;
-      event CountUpdated(uint newCount, address indexed updater);
-      function increment() public {
-          count += 1;
-          emit CountUpdated(count, msg.sender);
-      }
-  }
-  ```
-  Deploy, gọi `increment`, kiểm tra log event trong Remix.  
-**Kết quả**: Biết dùng event để ghi lại hành động trong contract.  
+- **Lý thuyết (10 phút)**: Đọc “Events” ([OpenZeppelin](https://docs.openzeppelin.com/learn/developing-smart-contracts)).
+    1. **Event** là cầu nối giữa smart contract và ứng dụng bên ngoài (frontend, backend). 
+    2. **Event** không thay đổi dữ liệu.
+    3. **Event** chỉ được ghi ==khi **transaction** thành công.==
+    4. Khai báo event với từ khóa `event`, có thể chỉ định `indexed` để lọc dễ dàng hơn. Phát ra event bằng từ khóa `emit`.
+    5. Một transaction có thể phát nhiều event.
+    ```solidity
+- **Thực hành (20 phút)**: Trong Remix, tạo contract với event. Deploy, gọi `increment`, kiểm tra log event trong Remix.  :  
+    ```solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+    contract Counter{
+        uint public count; //biến đếm
+        
+        // event là từ khóa dùng để khai báo
+        // CountUpdated là tên hàm
+        // indexed dùng để dễ lọc log
+        event CountUpdated(uint newCount, address indexed caller); 
+        
+        //hàm tăng giá trị
+        function increment() public {
+            count = count + 1;
+            //emit là từ khóa dùng để phát emit
+            emit CountUpdated(count, msg.sender); 
+        }
+    }
+    //==================output===============
+    // Khi gọi hàm increment lần 1:
+    [
+        {
+            "from": "0x1c91347f2A44538ce62453BEBd9Aa907C662b4bD",
+            "topic": "0xd48bf218b0b7d9728853fd07bbded14323db759dce9fb46adcacf119fdb15cfd",
+            "event": "CountUpdated",
+            "args": {
+                "0": "1", // chú ý chỗ này
+                "1": "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4" //chú ý chỗ này
+            }
+        }
+    ]
+    // Khi gọi increment lần 2:
+    [
+        {
+            "from": "0x1c91347f2A44538ce62453BEBd9Aa907C662b4bD",
+            "topic": "0xd48bf218b0b7d9728853fd07bbded14323db759dce9fb46adcacf119fdb15cfd",
+            "event": "CountUpdated",
+            "args": {
+                "0": "2", //chú ý chỗ này
+                "1": "0x5B38Da6a701c568545dCfcB03FcB875f56beddC4" //chú ý chỗ này
+            }
+        }
+    ]
+    ```
+**Kết quả**: Biết dùng event để ghi lại hành động trong contract.
 
 ---
 
