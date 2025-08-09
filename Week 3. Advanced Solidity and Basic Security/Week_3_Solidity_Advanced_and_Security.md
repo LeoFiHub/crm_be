@@ -145,21 +145,27 @@
 
 ---
 
-### Ngày 4: Bảo mật với OpenZeppelin (Ownable)
+- [x] Ngày 4: Bảo mật với OpenZeppelin (Ownable)
 **Mục tiêu**: Sử dụng OpenZeppelin để thêm bảo mật.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (10 phút)**: Đọc “Access Control” ([OpenZeppelin](https://docs.openzeppelin.com/learn/developing-smart-contracts)). `Ownable` giới hạn quyền truy cập cho owner.  
+- **Lý thuyết (10 phút)**: Đọc “Access Control” ([OpenZeppelin](https://docs.openzeppelin.com/learn/developing-smart-contracts)). 
+    1. `Ownable` giới hạn quyền truy cập cho owner.
 - **Thực hành (20 phút)**: Trong Remix, dùng OpenZeppelin:  
   ```solidity
   // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
-  contract MyContract is Ownable {
-      uint public value;
-      function setValue(uint _value) public onlyOwner {
-          value = _value;
-      }
-  }
+    pragma solidity ^0.8.0;
+    import "https://github.com/OpenZeppelin/openzeppelin-contracts/blob/master/contracts/access/Ownable.sol";
+    contract MyContract is Ownable{
+        uint public value;
+        constructor(address initialOwner) Ownable(initialOwner){
+            initialOwner = msg.sender;
+        }
+
+        function setValue(uint _value) public onlyOwner{
+            value = _value;
+        }
+    }
+
   ```
   Deploy, thử gọi `setValue` từ non-owner, kiểm tra lỗi.  
 **Kết quả**: Hiểu cách dùng `Ownable` để bảo mật hàm.  
