@@ -144,8 +144,7 @@
 **Kết quả**: Biết dùng event để ghi lại hành động trong contract.
 
 ---
-
-- [x] Ngày 4: Bảo mật với OpenZeppelin (Ownable)
+- [x] ==Ngày 4: Bảo mật với OpenZeppelin (Ownable)==
 **Mục tiêu**: Sử dụng OpenZeppelin để thêm bảo mật.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Đọc “Access Control” ([OpenZeppelin](https://docs.openzeppelin.com/learn/developing-smart-contracts)). 
@@ -172,28 +171,61 @@
 
 ---
 
-### Ngày 5: Viết contract Voting (Phần 1)
+- [x] ==Ngày 5: Viết contract Voting (Phần 1)==
 **Mục tiêu**: Bắt đầu viết contract Voting với struct và mapping.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Ôn lại struct, mapping ([freeCodeCamp](https://www.freecodecamp.org/news/learn-solidity-handbook/#structs)).  
-- **Thực hành (20 phút)**: Trong Remix, tạo contract Voting:  
-  ```solidity
-  // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract Voting {
-      struct Candidate {
-          string name;
-          uint voteCount;
-      }
-      mapping(uint => Candidate) public candidates;
-      uint public candidateCount;
-      function addCandidate(string memory _name) public {
-          candidates[candidateCount] = Candidate(_name, 0);
-          candidateCount++;
-      }
-  }
-  ```
-  Deploy, gọi `addCandidate`, kiểm tra dữ liệu trong `candidates`.  
+    1. **Struct** là kiểu dữ liệu tùy chỉnh, chứa nhiều trường khác nhau.
+        ```solidity
+            //khai báo
+            struct Person {
+                string name;
+                uint age;
+            }
+            //khởi tạo
+            Person memory newPerson = Person("Alice", 30);
+        ```
+    2. **Mapping** là cấu trúc dữ liệu ánh xạ khóa đến giá trị, giống như dictionary trong Python.
+        ```solidity
+            //khai báo
+            mapping(address => uint) public balances;
+            //khởi tạo
+            balances[msg.sender] = 100; //gán giá trị
+        ```
+- **Thực hành (20 phút)**: Trong Remix, tạo contract Voting. Deploy, gọi `addCandidate`, kiểm tra dữ liệu trong `candidates`:  
+    ```solidity
+    // SPDX-License-Identifier: MIT
+    pragma solidity ^0.8.0;
+    contract Voting{
+        // tạo 1 struct Candidate
+        // tạo 1 mapping (mảng) lưu thông tin của từ candidate
+        // tạo 1 biến đếm số lượng candidate
+        // tạo 1 function addCandidate gồm số thứ tự và địa chỉ có ví đó
+        // tạo 1 function getAllCandidate 
+
+        struct Candidate{
+            string name;
+            uint voteCount;
+        }
+        mapping(uint => Candidate) public candidates; // một mảng lưu các đối tượng Candidate
+        uint public candidatesCount;
+
+        function addCandidate(string memory _name) public {
+            candidates[candidatesCount] = Candidate(_name, 0);
+            candidatesCount = candidatesCount + 1;
+        }
+
+        function getAllCandidate() public view returns (Candidate[] memory) {
+            //mapping không thể duyệt và trả về toàn bộ dữ liệu, nên phải tạo một mảng tạm
+            Candidate[] memory result = new Candidate[](candidatesCount);
+            for (uint i = 0; i < candidatesCount; i++) {
+                result[i] = candidates[i];
+            }
+            return result;
+        }
+
+    }
+    ```
 **Kết quả**: Viết được contract Voting với struct và mapping.  
 
 ---
