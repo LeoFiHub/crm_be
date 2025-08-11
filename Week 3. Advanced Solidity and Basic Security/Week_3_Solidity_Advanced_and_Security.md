@@ -230,42 +230,67 @@
 
 ---
 
-### Ngày 6: Viết contract Voting (Phần 2)
+- [ ] ==Ngày 6: Viết contract Voting (Phần 2)==
 **Mục tiêu**: Thêm tính năng vote và event.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Ôn lại events ([OpenZeppelin](https://docs.openzeppelin.com/learn/developing-smart-contracts)).  
 - **Thực hành (20 phút)**: Trong Remix, mở rộng contract Voting:  
   ```solidity
   // SPDX-License-Identifier: MIT
-  pragma solidity ^0.8.0;
-  contract Voting {
-      struct Candidate {
-          string name;
-          uint voteCount;
-      }
-      mapping(uint => Candidate) public candidates;
-      mapping(address => bool) public hasVoted;
-      uint public candidateCount;
-      event Voted(address indexed voter, uint candidateId);
-      function addCandidate(string memory _name) public {
-          candidates[candidateCount] = Candidate(_name, 0);
-          candidateCount++;
-      }
-      function vote(uint _candidateId) public {
-          require(_candidateId < candidateCount, "Invalid candidate");
-          require(!hasVoted[msg.sender], "Already voted");
-          candidates[_candidateId].voteCount++;
-          hasVoted[msg.sender] = true;
-          emit Voted(msg.sender, _candidateId);
-      }
-  }
+    pragma solidity ^0.8.0;
+    contract Voting{
+        // tạo 1 struct Candidate
+        // tạo 1 mapping (mảng) lưu thông tin của từ candidate
+        // tạo 1 biến đếm số lượng candidate
+        // tạo 1 function addCandidate gồm số thứ tự và địa chỉ có ví đó
+        // tạo 1 function getAllCandidate 
+
+        //tạo 1 biến mapping hasVoted để kiểm tra người dùng đã có vote hay chưa. thông tin là address của người đó
+        // tạo 1 event người nào vote (voter), vote cho người nào (candidateId)
+        // hàm vote nhận vào giá trị id của candidate cần vote (candidateId) 
+        //=> kiểm tra id có lớn hơn số lượng hiện có không, có vote rồi chưa (biến hasVoted), emit thông tin msg.sender và candidateId
+
+
+        struct Candidate{
+            string name;
+            uint voteCount;
+        }
+        mapping(uint => Candidate) public candidates; // một mảng lưu các đối tượng Candidate
+        uint public candidatesCount;
+        mapping(address => bool) public hasVoted; // mapping (type_data => type_data)
+        event Voted(address indexed voter, uint candidateId);
+
+        function addCandidate(string memory _name) public {
+            candidates[candidatesCount] = Candidate(_name, 0);
+            candidatesCount = candidatesCount + 1;
+        }
+
+        function vote(uint _candidateId) public {
+            require(_candidateId < candidatesCount, "Error! Invalid candidates");
+            require(!hasVoted[msg.sender], "Error! Already voted");
+            candidates[_candidateId].voteCount++; //candidates là mảng -> thêm [] thành 1 đối tượng Candidate -> mới truy vấn được biến voteCount
+            hasVoted[msg.sender] = true; // đánh dấu địa chỉ đã vote
+            emit Voted(msg.sender, _candidateId); // phát sự kiện Voted
+
+        }
+
+        function getAllCandidate() public view returns (Candidate[] memory) {
+            //mapping không thể duyệt và trả về toàn bộ dữ liệu, nên phải tạo một mảng tạm
+            Candidate[] memory result = new Candidate[](candidatesCount);
+            for (uint i = 0; i < candidatesCount; i++) {
+                result[i] = candidates[i];
+            }
+            return result;
+        }
+
+    }
   ```
   Deploy, thêm candidate, vote, kiểm tra `voteCount` và log event.  
 **Kết quả**: Contract Voting hỗ trợ bỏ phiếu, có event theo dõi.  
 
 ---
 
-### Ngày 7: Debug và bảo mật Voting
+- [x] ==Ngày 7: Debug và bảo mật Voting==
 **Mục tiêu**: Debug contract và thêm bảo mật với OpenZeppelin.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (10 phút)**: Đọc “Debugging” ([OpenZeppelin](https://docs.openzeppelin.com/learn/developing-smart-contracts)). Dùng Remix để tìm lỗi (VD: revert).  
