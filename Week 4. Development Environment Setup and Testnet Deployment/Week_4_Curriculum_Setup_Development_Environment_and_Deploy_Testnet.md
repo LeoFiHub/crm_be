@@ -24,7 +24,7 @@
 
 ---
 
-- [ ] ==Ngày 2: Cài đặt Hardhat==
+- [x] ==Ngày 2: Cài đặt Hardhat==
 
 **Mục tiêu**: Thiết lập dự án Hardhat.\
 **Hoạt động (30 phút)**:
@@ -42,7 +42,7 @@
 
 ---
 
-### Ngày 3: Viết contract Voting trong Hardhat
+- [x] ==Ngày 3: Viết contract Voting trong Hardhat==
 
 **Mục tiêu**: Chuyển contract Voting sang Hardhat.\
 **Hoạt động (30 phút)**:
@@ -83,7 +83,7 @@
 
 ---
 
-### Ngày 4: Cấu hình MetaMask và Testnet Sepolia
+- [x] Ngày 4: Cấu hình MetaMask và Testnet Sepolia
 
 **Mục tiêu**: Kết nối MetaMask với testnet Sepolia.\
 **Hoạt động (30 phút)**:

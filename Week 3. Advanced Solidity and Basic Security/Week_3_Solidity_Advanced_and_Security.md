@@ -241,14 +241,14 @@
     contract Voting{
         // tạo 1 struct Candidate
         // tạo 1 mapping (mảng) lưu thông tin của từ candidate
-        // tạo 1 biến đếm số lượng candidate
-        // tạo 1 function addCandidate gồm số thứ tự và địa chỉ có ví đó
+        // tạo 1 biến đếm số lượng candidate (candidateCount)
+        // tạo 1 function addCandidate (nhận vào tên của candidate)
         // tạo 1 function getAllCandidate 
 
         //tạo 1 biến mapping hasVoted để kiểm tra người dùng đã có vote hay chưa. thông tin là address của người đó
         // tạo 1 event người nào vote (voter), vote cho người nào (candidateId)
         // hàm vote nhận vào giá trị id của candidate cần vote (candidateId) 
-        //=> kiểm tra id có lớn hơn số lượng hiện có không, có vote rồi chưa (biến hasVoted), emit thông tin msg.sender và candidateId
+        //=> kiểm tra id có lớn hơn số lượng hiện có không, có vote rồi chưa (biến hasVoted), cộng số phiếu cho candidate đó, đổi status lại là true cho hasVoted, emit thông tin msg.sender và candidateId
 
 
         struct Candidate{
@@ -261,12 +261,12 @@
         event Voted(address indexed voter, uint candidateId);
 
         function addCandidate(string memory _name) public {
-            candidates[candidatesCount] = Candidate(_name, 0);
+            candidates[candidatesCount] = Candidate(_name, 0); // tạo đối tượng Candidate với tên và số phiếu = 0 ban đầu
             candidatesCount = candidatesCount + 1;
         }
 
         function vote(uint _candidateId) public {
-            require(_candidateId < candidatesCount, "Error! Invalid candidates");
+            require(_candidateId < candidatesCount, "Error! Invalid candidate");
             require(!hasVoted[msg.sender], "Error! Already voted");
             candidates[_candidateId].voteCount++; //candidates là mảng -> thêm [] thành 1 đối tượng Candidate -> mới truy vấn được biến voteCount
             hasVoted[msg.sender] = true; // đánh dấu địa chỉ đã vote
