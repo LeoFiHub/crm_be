@@ -98,7 +98,7 @@
 
 ---
 
-### Ngày 5: Viết script deploy lên Sepolia
+- [x] ==Ngày 5: Viết script deploy lên Sepolia==
 
 **Mục tiêu**: Deploy contract Voting lên Sepolia.\
 **Hoạt động (30 phút)**:
@@ -108,14 +108,21 @@
   - Trong `hardhat.config.js`, thêm cấu hình Sepolia:
 
     ```javascript
+    require('dotenv').config();
     require("@nomicfoundation/hardhat-toolbox");
+    require("@nomicfoundation/hardhat-verify");
+
+    /** @type import('hardhat/config').HardhatUserConfig */
     module.exports = {
-      solidity: "0.8.20",
-      networks: {
+      solidity: "0.8.28",
+      networks:{
         sepolia: {
-          url: "https://rpc.sepolia.org",
-          accounts: ["YOUR_PRIVATE_KEY"] // Thay bằng private key từ MetaMask
+          url: process.env.SEPOLIA_RPC_URL, // lấy dữ liệu bên .env file
+          accounts: [process.env.PRIVATE_KEY],
         }
+      },
+      etherscan:{
+        apiKey: process.env.ETHERSCAN_API_KEY
       }
     };
     ```
@@ -124,17 +131,20 @@
     ```javascript
     const hre = require("hardhat");
     async function main() {
-      const Voting = await hre.ethers.getContractFactory("Voting");
-      const voting = await Voting.deploy();
-      await voting.deployed();
-      console.log("Voting deployed to:", voting.address);
+        const Voting = await hre.ethers.getContractFactory("Voting");
+        // Tăng gas price lên 30 gwei (hoặc giá trị bạn muốn)
+        const overrides = { gasPrice: hre.ethers.parseUnits("5", "gwei") };
+        const voting = await Voting.deploy(overrides);
+        await voting.waitForDeployment(); // Sửa lại dòng này
+        console.log("Voting deployed to:", await voting.getAddress());
     }
     main().catch((error) => {
-      console.error(error);
-      process.exitCode = 1;
+        console.error(error);
+        process.exitCode = 1;
     });
     ```
-  - Chạy: `npx hardhat run scripts/deploy.js --network sepolia`.
+  - **Chạy để deploy**: `npx hardhat run scripts/deploy.js --network sepolia`.
+  - **Verify code**: `npx hardhat verify --network sepolia ĐỊA_CHỈ_CONTRACT "constructor arguments nếu có"`
   - Lưu địa chỉ contract từ console.\
     **Kết quả**: Deploy contract Voting lên Sepolia, có địa chỉ contract.
 
