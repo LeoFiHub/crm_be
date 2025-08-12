@@ -9,7 +9,7 @@
 
 ## Lịch trình học (7 ngày, 30 phút/ngày)
 
-### Ngày 1: Cài đặt VS Code và Node.js
+- [x] ==Ngày 1: Cài đặt VS Code và Node.js==
 
 **Mục tiêu**: Chuẩn bị môi trường phát triển cơ bản.\
 **Hoạt động (30 phút)**:
@@ -24,18 +24,20 @@
 
 ---
 
-### Ngày 2: Cài đặt Hardhat
+- [ ] ==Ngày 2: Cài đặt Hardhat==
 
 **Mục tiêu**: Thiết lập dự án Hardhat.\
 **Hoạt động (30 phút)**:
 
-- **Lý thuyết (5 phút)**: Đọc “Getting Started” (Hardhat Docs). Hardhat tự động hóa việc compile, deploy.
+- **Lý thuyết (5 phút)**: Đọc “Getting Started” (Hardhat Docs).
+  1. **Hardhat** là framework giúp tự động hóa các bước phát triển smart contract: compile, deploy, test, debug.
+  2. Chỉ hỗ trợ chủ yếu **Solidity**, không hỗ trợ tất cả.
 - **Thực hành (25 phút)**:
   - Mở terminal, tạo thư mục dự án: `mkdir my-voting-dapp && cd my-voting-dapp`.
   - Khởi tạo dự án: `npm init -y`.
-  - Cài Hardhat: `npm install --save-dev hardhat`.
+  - Cài Hardhat: `npm install --save-dev hardhat` => này cho phép sử dụng Hardhat trong dự án.
   - Chạy `npx hardhat` và chọn “Create a JavaScript project”.
-  - Kiểm tra cấu trúc thư mục: `contracts/`, `scripts/`, `test/`.\
+  - Kiểm tra cấu trúc thư mục: `contracts/`, `scripts/`, `test/`. Chỉ có thư mục `contracts/`, `test/` được tạo, `scripts/` không có.
     **Kết quả**: Dự án Hardhat được thiết lập, sẵn sàng viết contract.
 
 ---
