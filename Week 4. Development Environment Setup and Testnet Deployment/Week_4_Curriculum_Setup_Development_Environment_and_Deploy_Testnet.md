@@ -103,7 +103,10 @@
 **Mục tiêu**: Deploy contract Voting lên Sepolia.\
 **Hoạt động (30 phút)**:
 
-- **Lý thuyết (5 phút)**: Đọc “Deploying Contracts” (Hardhat Docs). Script deploy tự động hóa triển khai.
+- **Lý thuyết (5 phút)**: Đọc “Deploying Contracts” (Hardhat Docs). 
+1. Script deploy tự động hóa triển khai.
+2. SEPOLIA_RPC_URL: lấy ở trang `https://developer.metamask.io/key/active-endpoints`
+3. ETHERSCAN_API_KEY: lấy ở trang `https://etherscan.io/apidashboard`.
 - **Thực hành (25 phút)**:
   - Trong `hardhat.config.js`, thêm cấu hình Sepolia:
 
@@ -150,12 +153,18 @@
 
 ---
 
-### Ngày 6: Viết unit test cho contract
+- [x] ==Ngày 6: Viết unit test cho contract==
 
 **Mục tiêu**: Viết unit test cơ bản cho Voting.\
 **Hoạt động (30 phút)**:
 
-- **Lý thuyết (5 phút)**: Đọc “Testing Contracts” (Hardhat Docs). Unit test kiểm tra logic contract.
+- **Lý thuyết (5 phút)**: Đọc “Testing Contracts” (Hardhat Docs). 
+1. Unit test kiểm tra logic contract.
+2. Deploy contract trong môi trường test (local để test) để kiểm tra.
+    1. Chạy Hardhat node local: `npx hardhat node`
+    2. Deploy contract lên node local: `npx hardhat run scripts/deploy.js --network localhost`
+    3. Kiểm tra: `npx hardhat console --network localhost`
+    4. Chạy test: `npx hardhat test`
 - **Thực hành (25 phút)**: Trong `test/`, tạo file `Voting.test.js`:
 
   ```javascript
