@@ -108,7 +108,7 @@
 2. SEPOLIA_RPC_URL: lấy ở trang `https://developer.metamask.io/key/active-endpoints`
 3. ETHERSCAN_API_KEY: lấy ở trang `https://etherscan.io/apidashboard`.
 - **Thực hành (25 phút)**:
-  - Trong `hardhat.config.js`, thêm cấu hình Sepolia:
+  - Trong `hardhat.config.js`, thêm cấu hình Sepolia. Địa chỉ Smart Contract: https://sepolia.etherscan.io/address/0xff3F736Bd27A5386ecAfF6a05D6609B399a49c1C#code:
 
     ```javascript
     require('dotenv').config();
@@ -196,7 +196,7 @@
 
 ---
 
-### Ngày 7: Kiểm tra và debug trên Sepolia
+- [x] ==Ngày 7: Kiểm tra và debug trên Sepolia==
 
 **Mục tiêu**: Kiểm tra contract trên Sepolia và debug lỗi.\
 **Hoạt động (30 phút)**:
