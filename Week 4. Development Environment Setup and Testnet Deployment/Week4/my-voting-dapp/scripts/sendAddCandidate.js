@@ -3,7 +3,7 @@ const { ethers } = require("ethers");
 
 // Thông tin contract
 // const CONTRACT_ADDRESS = "ĐỊA_CHỈ_CONTRACT_CỦA_BẠN"; // Thay bằng địa chỉ contract Voting đã deploy
-const CONTRACT_ADDRESS = "0xff3F736Bd27A5386ecAfF6a05D6609B399a49c1C"; // Thay bằng địa chỉ contract Voting đã deploy
+const CONTRACT_ADDRESS = process.env.SMART_CONTRACT_ADDRESS; // Thay bằng địa chỉ contract Voting đã deploy
 const ABI = [
   "function addCandidate(string memory _name) public",
   "function candidates(uint) public view returns (string name, uint voteCount)"
@@ -18,7 +18,7 @@ async function main() {
   const voting = new ethers.Contract(CONTRACT_ADDRESS, ABI, wallet);
 
   // Gọi hàm addCandidate
-  const tx = await voting.addCandidate("Nguyen");
+  const tx = await voting.addCandidate("Nguyen"); // hàm addCandidate trùng với trên ABI
   await tx.wait(); // Chờ xác nhận
 
   // Kiểm tra lại candidate vừa thêm

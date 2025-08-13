@@ -10,7 +10,7 @@
 
 ## Lịch trình học (7 ngày, 30 phút/ngày)
 
-### Ngày 1: Cài đặt Node.js và ethers.js
+- [x] ==Ngày 1: Cài đặt Node.js và ethers.js==
 **Mục tiêu**: Thiết lập môi trường Node.js và ethers.js.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Đọc “What is ethers.js” ([QuickNode](https://www.quicknode.com/guides/ethereum-development/getting-started/what-is-the-ethereum-virtual-machine-evm)). Ethers.js là thư viện để tương tác với blockchain Ethereum.  
@@ -27,53 +27,73 @@
 
 ---
 
-### Ngày 2: Đọc state từ contract Voting
+- [x] ==Ngày 2: Đọc state từ contract Voting==
 **Mục tiêu**: Dùng ethers.js đọc state từ contract.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (5 phút)**: Đọc “Reading from Contracts” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Dùng ethers.js để gọi hàm view.  
+- **Lý thuyết (5 phút)**: Đọc “Reading from Contracts” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). 
+  1. Dùng ethers.js để gọi hàm view.  
 - **Thực hành (25 phút)**: Trong `index.js`, viết script đọc `candidateCount`:  
   ```javascript
+  require("dotenv").config();
   const { ethers } = require("ethers");
-  const provider = new ethers.providers.JsonRpcProvider("https://rpc.sepolia.org");
-  const contractAddress = "YOUR_CONTRACT_ADDRESS"; // Thay bằng địa chỉ từ Tuần 4
+
+  //Ket noi voi Sepolia
+  const provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
+  //dia chi contract
+  const contractAddress = process.env.SMART_CONTRACT_ADDRESS;
+  //dia chi ABI
   const abi = [
-    "function candidateCount() view returns (uint)"
+      "function candidateCount() view returns (uint)" //này 1 là hàm, 2 là biến có chữ public => biến nó sẽ parse ra hàm như này
   ];
+  //tao instance cho contract 
   const contract = new ethers.Contract(contractAddress, abi, provider);
-  async function getCandidateCount() {
-    const count = await contract.candidateCount();
-    console.log("Candidate Count:", count.toString());
+
+  async function main(){
+      const count = await contract.candidateCount();
+      console.log("Candidate Count: ", count.toString());
   }
-  getCandidateCount();
+  main();
   ```
   Chạy: `node index.js`, kiểm tra kết quả.  
 **Kết quả**: Đọc được `candidateCount` từ contract Voting trên Sepolia.  
 
 ---
 
-### Ngày 3: Gửi transaction đến contract Voting
+- [x] ==Ngày 3: Gửi transaction đến contract Voting==
 **Mục tiêu**: Gửi transaction (vote) bằng ethers.js.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Đọc “Writing to Contracts” ([QuickNode](https://www.quicknode.com/guides/ethereum-development/smart-contracts/an-overview-of-how-smart-contracts-work-on-ethereum)). Cần signer để gửi transaction.  
 - **Thực hành (25 phút)**: Sửa `index.js` để gọi hàm `vote`:  
   ```javascript
+  require("dotenv").config();
   const { ethers } = require("ethers");
-  const provider = new ethers.providers.JsonRpcProvider("https://rpc.sepolia.org");
-  const wallet = new ethers.Wallet("YOUR_PRIVATE_KEY", provider); // Thay bằng private key
-  const contractAddress = "YOUR_CONTRACT_ADDRESS"; // Thay bằng địa chỉ
-  const abi = [
-    "function vote(uint _candidateId) public",
-    "function candidates(uint) view returns (string, uint)"
+
+  // Thông tin contract
+  // const CONTRACT_ADDRESS = "ĐỊA_CHỈ_CONTRACT_CỦA_BẠN"; // Thay bằng địa chỉ contract Voting đã deploy
+  const CONTRACT_ADDRESS = process.env.SMART_CONTRACT_ADDRESS; // Thay bằng địa chỉ contract Voting đã deploy
+  const ABI = [
+    "function addCandidate(string memory _name) public",
+    "function candidates(uint) public view returns (string name, uint voteCount)"
   ];
-  const contract = new ethers.Contract(contractAddress, abi, wallet);
-  async function vote(candidateId) {
-    const tx = await contract.vote(candidateId);
-    await tx.wait();
-    console.log("Voted for candidate:", candidateId);
-    const candidate = await contract.candidates(candidateId);
-    console.log("Candidate vote count:", candidate[1].toString());
+
+  async function main() {
+    // Kết nối tới Sepolia qua Infura/Alchemy hoặc RPC
+    const provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
+    const wallet = new ethers.Wallet(process.env.PRIVATE_KEY, provider);
+
+    // Kết nối contract
+    const voting = new ethers.Contract(CONTRACT_ADDRESS, ABI, wallet);
+
+    // Gọi hàm addCandidate
+    const tx = await voting.addCandidate("Nguyen"); // hàm addCandidate trùng với trên ABI
+    await tx.wait(); // Chờ xác nhận
+
+    // Kiểm tra lại candidate vừa thêm
+    const candidate = await voting.candidates(0);
+    console.log("Candidate:", candidate);
   }
-  vote(0); // Thay 0 bằng ID candidate hợp lệ
+
+  main().catch(console.error);
   ```
   Chạy: `node index.js`, kiểm tra console và [Sepolia Etherscan](https://sepolia.etherscan.io/).  
 **Kết quả**: Gửi transaction `vote`, kiểm tra `voteCount` cập nhật.  
