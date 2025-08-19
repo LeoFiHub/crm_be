@@ -126,7 +126,7 @@
 
 ---
 
-### Ngày 5: Mở rộng API để vote
+- [x] ==Ngày 5: Mở rộng API để vote==
 **Mục tiêu**: Thêm endpoint để gửi transaction `vote`.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Ôn lại transaction ([QuickNode](https://www.quicknode.com/guides/ethereum-development/smart-contracts/an-overview-of-how-smart-contracts-work-on-ethereum)).  
