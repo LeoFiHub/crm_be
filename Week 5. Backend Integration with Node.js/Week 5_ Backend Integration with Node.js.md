@@ -100,7 +100,7 @@
 
 ---
 
-### Ngày 4: Tạo API cơ bản với Express
+- [x] ==Ngày 4: Tạo API cơ bản với Express==
 **Mục tiêu**: Tạo API để đọc `candidateCount`.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Đọc “Express Basics” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Express là framework để tạo API.  
