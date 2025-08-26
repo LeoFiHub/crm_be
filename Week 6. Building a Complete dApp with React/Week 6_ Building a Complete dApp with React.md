@@ -10,17 +10,21 @@
 
 ## Lịch trình học (7 ngày, 30 phút/ngày)
 
-### Ngày 1: Cài đặt React và Tailwind CSS
+- [x] ==Ngày 1: Cài đặt React và Tailwind CSS==
 **Mục tiêu**: Thiết lập dự án React.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (5 phút)**: Đọc “React Basics” ([Webisoft](https://webisoft.com/articles/how-to-create-a-smart-contract/)). React là thư viện để xây dựng giao diện.  
+- **Lý thuyết (5 phút)**: Đọc “React Basics” ([Webisoft](https://webisoft.com/articles/how-to-create-a-smart-contract/))
+  - React giúp chia nhỏ giao diện, quản lý trạng thái hiệu quả, rất phù hợp để xây dựng dApp hiện đại.
 - **Thực hành (25 phút)**:  
-  - Trong thư mục `my-voting-dapp`, tạo dự án React: `npx create-react-app voting-dapp-frontend`.  
+  - Trong thư mục `my-voting-dapp`, tạo dự án React: `npm create vite@latest voting-dapp-frontend`.  
   - Cài Tailwind CSS: Theo hướng dẫn ([Tailwind CSS](https://tailwindcss.com/docs/guides/create-react-app)).  
+    1. `cd voting-dapp-frontend`
+    2. ... Tự cài đi gì mà với `vite` đó
+    3. `npm run dev` để chạy thử.
   - Cài ethers.js: `npm install ethers`.  
-  - Chạy dự án: `cd voting-dapp-frontend && npm start`, mở `http://localhost:3000`.  
+  - Chạy dự án: `cd voting-dapp-frontend && npm run dev`, mở `http://localhost:3000`.  
 **Kết quả**: Dự án React hoạt động, sẵn sàng tích hợp contract.  
-
+![alt text](image.png)
 ---
 
 ### Ngày 2: Kết nối MetaMask với React

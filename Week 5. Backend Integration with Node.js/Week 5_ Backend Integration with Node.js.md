@@ -108,18 +108,25 @@
   - Cài Express: `npm install express`.  
   - Tạo file `server.js`:  
     ```javascript
-    const express = require("express");
+    require("dotenv").config();
     const { ethers } = require("ethers");
-    const app = express();
-    const provider = new ethers.providers.JsonRpcProvider("https://rpc.sepolia.org");
-    const contractAddress = "YOUR_CONTRACT_ADDRESS";
-    const abi = ["function candidateCount() view returns (uint)"];
+
+    //Ket noi voi Sepolia
+    const provider = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
+    //dia chi contract
+    const contractAddress = process.env.SMART_CONTRACT_ADDRESS;
+    //dia chi ABI
+    const abi = [
+        "function candidateCount() view returns (uint)" //này 1 là hàm, 2 là biến có chữ public => biến nó sẽ parse ra hàm như này
+    ];
+    //tao instance cho contract 
     const contract = new ethers.Contract(contractAddress, abi, provider);
-    app.get("/candidate-count", async (req, res) => {
-      const count = await contract.candidateCount();
-      res.json({ candidateCount: count.toString() });
-    });
-    app.listen(3000, () => console.log("Server running on port 3000"));
+
+    async function main(){
+        const count = await contract.candidateCount();
+        console.log("Candidate Count: ", count.toString());
+    }
+    main();
     ```
   - Chạy: `node server.js`. Truy cập `http://localhost:3000/candidate-count` trên trình duyệt.  
 **Kết quả**: API trả về `candidateCount` từ contract.  
@@ -132,33 +139,75 @@
 - **Lý thuyết (5 phút)**: Ôn lại transaction ([QuickNode](https://www.quicknode.com/guides/ethereum-development/smart-contracts/an-overview-of-how-smart-contracts-work-on-ethereum)).  
 - **Thực hành (25 phút)**: Sửa `server.js`:  
   ```javascript
+  // import dotenv, epress, ethers va khoi tao app express va app.use(expres.json)
+
+  // phan contract gom 
+  //     provider
+  //     wallet (private_key, provider)
+  //     contract_address
+  //     abi (function vote - public, function candidateCount - public view)
+  //     ket noi voi contract (contract_address, abi, wallet)
+
+  // phan api
+  //     api get so luong candidate -> goi contract.candidateCount()
+  //     api post vote
+  //         so candidateCount trong req.body
+  //         goi contract.vote(candidate_id) -> wait -> res.json(...)
+
+  // run app
+
+  require("dotenv").config();
   const express = require("express");
-  const { ethers } = require("ethers");
-  const app = express();
-  app.use(express.json());
-  const provider = new ethers.providers.JsonRpcProvider("https://rpc.sepolia.org");
-  const wallet = new ethers.Wallet("YOUR_PRIVATE_KEY", provider);
-  const contractAddress = "YOUR_CONTRACT_ADDRESS";
-  const abi = [
-    "function vote(uint _candidateId) public",
-    "function candidateCount() view returns (uint)"
+  const {ethers} = require("ethers")
+  const app = express()
+  app.use(express.json())
+
+  const PROVIDER = new ethers.JsonRpcProvider(process.env.SEPOLIA_RPC_URL);
+  const WALLET = new ethers.Wallet(process.env.PRIVATE_KEY, PROVIDER);
+  const CONTRACT_ADDRESS = process.env.SMART_CONTRACT_ADDRESS;
+  const ABI = [
+      "function vote(uint _candidateId) public", // ham vote
+      "function candidateCount() public view returns (uint)"
   ];
-  const contract = new ethers.Contract(contractAddress, abi, wallet);
-  app.get("/candidate-count", async (req, res) => {
-    const count = await contract.candidateCount();
-    res.json({ candidateCount: count.toString() });
+  const CONTRACT = new ethers.Contract(CONTRACT_ADDRESS, ABI, WALLET);
+
+  app.get("/candidate-count", async(req, res) => {
+      const count = await CONTRACT.candidateCount();
+      res.json({
+          candidateCount: count.toString()
+      });
   });
-  app.post("/vote", async (req, res) => {
-    const { candidateId } = req.body;
-    try {
-      const tx = await contract.vote(candidateId);
-      await tx.wait();
-      res.json({ message: `Voted for candidate ${candidateId}` });
-    } catch (error) {
-      res.status(500).json({ error: error.message });
-    }
+  app.post("/vote", async(req, res) => {
+      const {candidateId} = req.body;
+      try{
+          const tx = await CONTRACT.vote(candidateId);
+          await tx.wait()
+          res.json({
+              message: `Voted for candidate: ${candidateId}`
+          });
+      }
+      catch (error) {
+          res.status(500).json({
+              error: error.message
+          });
+      }
   });
-  app.listen(3000, () => console.log("Server running on port 3000"));
+
+  app.get("/", async(req,res) => {
+      res.json({
+          message : "Server running!"
+      })
+  });
+  app.listen(3001, () => 
+      console.log("Server running on port 3001")
+  );
+
+  process.on('uncaughtException', (err) => {
+      console.error('Uncaught Exception:', err);
+  });
+  process.on('unhandledRejection', (reason, promise) => {
+      console.error('Unhandled Rejection:', reason);
+  });
   ```
   Test endpoint `/vote` bằng Postman hoặc curl:  
   ```bash
@@ -168,7 +217,7 @@
 
 ---
 
-### Ngày 6: Xử lý lỗi (gas, network)
+- [x] ==Ngày 6: Xử lý lỗi (gas, network)==
 **Mục tiêu**: Debug lỗi khi tương tác với contract.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Đọc “Error Handling” ([DappUniversity](https://www.dappuniversity.com/articles/solidity-tutorial)). Lỗi phổ biến: gas limit, revert, network.  
