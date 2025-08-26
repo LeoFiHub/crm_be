@@ -27,7 +27,7 @@
 ![alt text](image.png)
 ---
 
-- [ ] ==Ngày 2: Kết nối MetaMask với React==
+- [x] ==Ngày 2: Kết nối MetaMask với React==
 **Mục tiêu**: Tích hợp MetaMask để lấy tài khoản người dùng.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Đọc “Connecting to MetaMask” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)).
@@ -60,7 +60,7 @@
 
 ---
 
-### Ngày 3: Đọc candidate từ contract Voting
+- [x] ==Ngày 3: Đọc candidate từ contract Voting==
 **Mục tiêu**: Hiển thị danh sách candidate từ contract.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Ôn lại ethers.js ([QuickNode](https://www.quicknode.com/guides/ethereum-development/smart-contracts/an-overview-of-how-smart-contracts-work-on-ethereum)).  
@@ -68,7 +68,7 @@
   ```javascript
   import { useState, useEffect } from "react";
   import { ethers } from "ethers";
-  const contractAddress = "YOUR_CONTRACT_ADDRESS"; // Thay bằng địa chỉ từ Tuần 4
+  const contractAddress = "0xff3F736Bd27A5386ecAfF6a05D6609B399a49c1C"; // Thay bằng địa chỉ từ Tuần 4
   const abi = [
     "function candidateCount() view returns (uint)",
     "function candidates(uint) view returns (string, uint)"
@@ -83,7 +83,7 @@
       }
     };
     const loadCandidates = async () => {
-      const provider = new ethers.providers.Web3Provider(window.ethereum);
+      const provider = new ethers.BrowserProvider(window.ethereum);
       const contract = new ethers.Contract(contractAddress, abi, provider);
       const count = await contract.candidateCount();
       const candidatesList = [];
@@ -115,7 +115,7 @@
 
 ---
 
-### Ngày 4: Gửi vote từ giao diện
+- [x] ==Ngày 4: Gửi vote từ giao diện==
 **Mục tiêu**: Thêm chức năng vote qua giao diện.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Đọc “Writing to Contracts” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)). Dùng signer để gửi transaction.  
@@ -184,7 +184,7 @@
 
 ---
 
-### Ngày 5: Tối ưu UX (Loading và lỗi)
+- [x] ==Ngày 5: Tối ưu UX (Loading và lỗi)==
 **Mục tiêu**: Thêm loading state và xử lý lỗi.  
 **Hoạt động (30 phút)**:  
 - **Lý thuyết (5 phút)**: Đọc “Error Handling” ([Webisoft](https://webisoft.com/articles/how-to-create-a-smart-contract/)).  
@@ -231,7 +231,7 @@
     const vote = async (candidateId) => {
       setLoading(true);
       try {
-        const provider = new ethers.providers.Web3Provider(window.ethereum);
+        const provider = new ethers.BrowserProvider(window.ethereum);
         const signer = provider.getSigner();
         const contract = new ethers.Contract(contractAddress, abi, signer);
         const tx = await contract.vote(candidateId);
