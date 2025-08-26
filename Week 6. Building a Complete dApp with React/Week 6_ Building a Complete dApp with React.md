@@ -27,10 +27,10 @@
 ![alt text](image.png)
 ---
 
-### Ngày 2: Kết nối MetaMask với React
+- [ ] ==Ngày 2: Kết nối MetaMask với React==
 **Mục tiêu**: Tích hợp MetaMask để lấy tài khoản người dùng.  
 **Hoạt động (30 phút)**:  
-- **Lý thuyết (5 phút)**: Đọc “Connecting to MetaMask” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)). MetaMask cung cấp provider để tương tác blockchain.  
+- **Lý thuyết (5 phút)**: Đọc “Connecting to MetaMask” ([Alchemy](https://www.alchemy.com/overviews/learn-solidity)).
 - **Thực hành (25 phút)**: Trong `src/App.js`, thêm code kết nối MetaMask:  
   ```javascript
   import { useState } from "react";
